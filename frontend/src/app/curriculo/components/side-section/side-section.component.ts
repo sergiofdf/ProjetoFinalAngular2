@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { ContactData } from 'src/app/models/contact-data.model';
-import { Skill } from 'src/app/models/skill.model';
+import { ContactData } from '../../models/contact-data.model';
+import { Skill } from '../../models/skill.model';
 
 @Component({
   selector: 'app-side-section',
