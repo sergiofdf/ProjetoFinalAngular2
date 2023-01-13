@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using WorkingBees.Core.Interfaces;
 using WorkingBees.Core.Models;
@@ -9,6 +11,8 @@ namespace WorkingBeesAPI.Controllers
     [Route("[controller]")]
     [Consumes("application/json")]
     [Produces("application/json")]
+    [EnableCors("PolicyCors")]
+    [Authorize]
     public class UserInfoController : Controller
     {
         private readonly IService<UserInfo> _userService;
@@ -24,6 +28,7 @@ namespace WorkingBeesAPI.Controllers
 
         [HttpGet("/Users")]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [AllowAnonymous]
         public ActionResult<List<UserInfo>> ListAllUsers()
         {
             return Ok(_userService.ListAll());
@@ -32,16 +37,18 @@ namespace WorkingBeesAPI.Controllers
         [HttpGet("/User/{userId}/id")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [AllowAnonymous]
         public ActionResult<UserInfo> GetUserByUserId(long userId)
         {
-            var user = _userService.Listallbyuserid(userId);
+            var user = _userService.Listallbyuserid(userId).FirstOrDefault();
             if (user == null) return NotFound();
-            return Ok(user);//revisar, pq a funcao list all está retornando um array
+            return Ok(user);
         }
 
         [HttpGet("/UserCompleteInfo/{userId}/id")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [AllowAnonymous]
         public ActionResult<UserCompleteInfo> GetUserCompleteInfo(long userId)
         {
             var user = _userCompleteInfoService.CompileUserInfo(userId);
@@ -53,6 +60,7 @@ namespace WorkingBeesAPI.Controllers
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status409Conflict)]
+        [Authorize(Roles = "Admin")]
         public ActionResult<bool> InsertUser(UserInfoDto userDto)
         {
             UserInfo userMapped = _mapper.Map<UserInfo>(userDto);
@@ -64,6 +72,7 @@ namespace WorkingBeesAPI.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [Authorize(Roles = "Admin")]
         public IActionResult UpdateUser(long id, UserInfoDto userInfoDto)
         {
             UserInfo userMapped = _mapper.Map<UserInfo>(userInfoDto);
@@ -75,6 +84,7 @@ namespace WorkingBeesAPI.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [Authorize(Roles = "Admin")]
         public IActionResult DeleteUser(long id)
         {
             if (!_userService.Delete(id))

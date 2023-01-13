@@ -18,5 +18,6 @@ namespace WorkingBees.Core.Models
         public string State { get; set; }
         [Required(ErrorMessage = "Endereço de imagem obrigatória.")]
         public string ProfileImageUrl { get; set; }
+        public string UserRole { get; set; }
     }
 }

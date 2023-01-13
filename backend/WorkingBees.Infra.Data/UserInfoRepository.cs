@@ -53,7 +53,7 @@ namespace WorkingBees.Infra.Data
         }
         public bool Insert(UserInfo user)
         {
-            var query = "INSERT INTO UserInfo VALUES (@name, @phoneNumber, @email, @city, @state, @profileImageUrl);";
+            var query = "INSERT INTO UserInfo VALUES (@name, @phoneNumber, @email, @city, @state, @profileImageUrl, @userRole);";
 
             var parameters = new DynamicParameters(user);
 
@@ -72,7 +72,7 @@ namespace WorkingBees.Infra.Data
 
         public bool Update(long id, UserInfo user)
         {
-            var query = "UPDATE UserInfo SET name=@name, phoneNumber=@phoneNumber, email=@email, city=@city, state=@state, profileImageUrl=@profileImageUrl WHERE userId=@userId;";
+            var query = "UPDATE UserInfo SET name=@name, phoneNumber=@phoneNumber, email=@email, city=@city, state=@state, profileImageUrl=@profileImageUrl, userRole=@userRole WHERE userId=@userId;";
 
             user.UserId = id;
             var parameters = new DynamicParameters(user);

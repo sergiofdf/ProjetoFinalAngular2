@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using WorkingBees.Core.Interfaces;
 using WorkingBees.Core.Models;
@@ -11,6 +12,8 @@ namespace WorkingBeesAPI.Controllers
     [Route("[controller]")]
     [Consumes("application/json")]
     [Produces("application/json")]
+    [EnableCors("PolicyCors")]
+    [Authorize]
     public class ExperiencesController : ControllerBase
     {
         private readonly IService<Experience> _experienceService;
@@ -24,6 +27,7 @@ namespace WorkingBeesAPI.Controllers
 
         [HttpGet("/experiences")]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [AllowAnonymous]
         public ActionResult<List<Experience>> ListAllExperiences()
         {
             return Ok(_experienceService.ListAll());
@@ -32,6 +36,7 @@ namespace WorkingBeesAPI.Controllers
         [HttpGet("/experiences/{userId}/id")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [AllowAnonymous]
         public ActionResult<List<Experience>> ListExperiencesByUserId(long userId)
         {
             var experiencesList = _experienceService.Listallbyuserid(userId);
@@ -43,6 +48,7 @@ namespace WorkingBeesAPI.Controllers
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status409Conflict)]
+        [Authorize(Roles = "Admin")]
         public ActionResult<bool> InsertExperience(ExperienceDto experienceDto)
         {
             Experience experienceMapped = _mapper.Map<Experience>(experienceDto);
@@ -54,6 +60,7 @@ namespace WorkingBeesAPI.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [Authorize(Roles = "Admin")]
         public IActionResult UpdateExperience(long id, ExperienceDto experienceDto)
         {
             Experience experienceMapped = _mapper.Map<Experience>(experienceDto);
@@ -65,6 +72,7 @@ namespace WorkingBeesAPI.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [Authorize(Roles = "Admin")]
         public IActionResult DeleteExperience(long id)
         {
             if (!_experienceService.Delete(id))

@@ -1,9 +1,10 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using WorkingBees.Core.Interfaces;
-using WorkingBees.Core.Models.Dtos;
 using WorkingBees.Core.Models;
+using WorkingBees.Core.Models.Dtos;
 
 namespace WorkingBeesAPI.Controllers
 {
@@ -11,6 +12,8 @@ namespace WorkingBeesAPI.Controllers
     [Route("[controller]")]
     [Consumes("application/json")]
     [Produces("application/json")]
+    [EnableCors("PolicyCors")]
+    [Authorize]
     public class SocialMediaInfoController : ControllerBase
     {
         private readonly IService<SocialMediaInfo> _socialMediaInfoService;
@@ -24,6 +27,7 @@ namespace WorkingBeesAPI.Controllers
 
         [HttpGet("/socialmediainfos")]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [AllowAnonymous]
         public ActionResult<List<SocialMediaInfo>> ListAllSocialMediaInfos()
         {
             return Ok(_socialMediaInfoService.ListAll());
@@ -43,6 +47,7 @@ namespace WorkingBeesAPI.Controllers
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status409Conflict)]
+        [Authorize(Roles = "Admin")]
         public ActionResult<bool> InsertExperience(SocialMediaInfoDto socialMediaInfoDto)
         {
             SocialMediaInfo socialMediaInfoMapped = _mapper.Map<SocialMediaInfo>(socialMediaInfoDto);
@@ -54,6 +59,7 @@ namespace WorkingBeesAPI.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [Authorize(Roles = "Admin")]
         public IActionResult UpdateExperience(long id, SocialMediaInfoDto socialMediaInfoDto)
         {
             SocialMediaInfo socialMediaInfoMapped = _mapper.Map<SocialMediaInfo>(socialMediaInfoDto);
@@ -65,6 +71,7 @@ namespace WorkingBeesAPI.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [Authorize(Roles = "Admin")]
         public IActionResult DeleteExperience(long id)
         {
             if (!_socialMediaInfoService.Delete(id))
