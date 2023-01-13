@@ -1,0 +1,20 @@
+<div
+  #myToast
+  class="toast position-fixed bottom-0 end-0 p-2 m-4"
+  role="alert"
+  aria-live="assertive"
+  aria-atomic="true"
+  ngClass="{{ messageType }}"
+>
+  <div class="d-flex">
+    <div class="toast-body">
+      {{ toastMessage }}
+    </div>
+    <button
+      type="button"
+      class="btn-close me-2 m-auto"
+      data-bs-dismiss="toast"
+      aria-label="Close"
+    ></button>
+  </div>
+</div>

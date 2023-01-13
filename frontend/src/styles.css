@@ -1,0 +1,13 @@
+/* You can add global styles to this file, and also import other style files */
+.footerColorScheme{
+  background-color: #0d2851;
+  color: white;
+}
+.footerColorScheme i{
+  color: white;
+}
+
+.textColorScheme, i{
+  color: #355f9e ;
+}
+

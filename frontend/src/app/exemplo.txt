@@ -1,0 +1,128 @@
+public skillBars: Skill[] = [{
+  skillTitle: "C#",
+  skillLevel: "80"
+},
+{
+  skillTitle: "SQL",
+  skillLevel: "80"
+},
+{
+  skillTitle: "WEB API",
+  skillLevel: "70"
+},
+{
+  skillTitle: "HTML & CSS",
+  skillLevel: "90"
+},
+{
+  skillTitle: "JavaScript",
+  skillLevel: "80"
+},
+{
+  skillTitle: "Angular",
+  skillLevel: "70"
+},
+]
+public languageBars: Skill[] = [{
+  skillTitle: "Portuguese",
+  skillLevel: "100"
+},
+{
+  skillTitle: "English",
+  skillLevel: "80"
+},
+{
+  skillTitle: "French",
+  skillLevel: "70"
+}
+]
+public contact: ContactData = {
+  imageUrl: "https://avatars.githubusercontent.com/u/84455399?s=400&u=b445c3580b2e938cc6a5197ac56d44e8d386b504&v=4",
+  contactInfo: [{
+    icon: "bi bi-person-fill",
+    text: "Sérgio Fleury Dias Filho"},
+    {
+    icon: "bi bi-wallet-fill",
+    text: "Full Stack Developer"
+  },
+  {
+    icon: "bi bi-house-door-fill",
+    text: "Botucatu - SP"
+  }, {
+    icon: "bi bi-mailbox2",
+    text: "sergiofdf@gmail.com"
+  }, {
+    icon: "bi bi-telephone-fill",
+    text: "(14) 99889-0326"
+  }
+  ]
+}
+public experiencesContainers: ExperienceContainer[] = [
+  {
+    icon: "bi bi-bag-fill",
+    title: "Work Experience",
+    experiences: [{
+      titleElement: "Full-Stack Developer / Banco Safra",
+      textDateElement: "Jun-2022  -  Dez-2022",
+      paragElement: "Contratado pelo programa Top Coders, em parceria com a Ada (antiga Let's Code). Programa consiste em treinamento Full Stack, mesclado com experiências e treinamentos internos administrados pelo Banco Safra."
+    },
+    {
+      titleElement: "Full-Stack Developer / AMLabs",
+      textDateElement: "Abr-2022  -  Mai-2022",
+      paragElement: "Desenvolvimento de front e back-end de um sistema para mercados autônomos. Experiência com Vue.JS e C#."
+    },
+    {
+      titleElement: "Engenheiro de Desenvolvimento de Processos / Embraer",
+      textDateElement: "Ago-2013  -  Abr-2022",
+      paragElement: "Desenvolvimento de processos produtivos para fabricação de peças para o setor aeronáutico. Responsável por pesquisar, especificar, selecionar, e implantar novas tecnologias buscando reduções de custo e melhores índices de qualidade."
+    },
+    {
+      titleElement: "Estágio Engenharia de Produto / Bosch",
+      textDateElement: "Fev-2013 - Jul-2013",
+      paragElement: "Estágio no departamento de alternadores e motores de partida. Participação em um time focado em reduções de custos de fabricação de alternadores."
+    },
+    {
+      titleElement: "Estágio Engenharia de Produto / Renault",
+      textDateElement: "Fev-2012 - Jul-2012",
+      paragElement: "Estágio no departamento de acústica no centro tecnológico. Realizado estudo comparativo de métodos experimentais e numéricos de validação de requisitos acústicos utilizados por fornecedores e internamente na Renault."
+    }
+    ]
+  },
+  {
+    icon: "bi bi-mortarboard-fill",
+    title: "Education",
+    experiences: [
+       {
+      titleElement: "Formação WEB Full Stack - ADA",
+      textDateElement: "Mai-2022  -  Em progresso",
+      paragElement: "Curso realizado através do programa Top Coders, em conjunto com o Banco Safra para formação WEB Full Stack, com foco em C# para Back-end e JS / Angular para o Front-end."
+      },
+      {
+      titleElement: "MBA Gestão Empresarial - FGV",
+      textDateElement: "Mar-2015 -  Mar-2017",
+      paragElement: "Curso de especialização em gestão de empresas."
+      },
+      {
+      titleElement: "Engenharia Mecânica - Unicamp",
+      textDateElement: "Jan-2008 -  Jul-2013",
+      paragElement: "Bacharelado em Engenharia Mecânica."
+    }
+    ]
+  }
+];
+public socialMedias: IconText[] = [{
+  icon: "bi bi-github",
+  text: "https://github.com/sergiofdf"
+},
+{
+  icon: "bi bi-facebook",
+  text: "https://www.facebook.com/fleurydiasfilho"
+},
+{
+  icon: "bi bi-instagram",
+  text: "https://www.instagram.com/sergiofdiasfilho/"
+},
+{
+  icon: "bi bi-linkedin",
+  text: "https://www.linkedin.com/in/sergio-fleury-dias-filho/"
+}];

@@ -1,0 +1,16 @@
+<app-contact-form
+  (formDataOutput)="onFormSubmitted($event)"
+  class="align-self-center"
+></app-contact-form>
+<p class="d-flex justify-content-center my-1 py-3">Find me on social media</p>
+<div class="w-25 d-flex justify-content-center align-self-center my-1 mx-3">
+  <ng-container
+    *ngFor="let socialMedia of socialMedias"
+    class="align-items-center"
+  >
+    <a href="{{ socialMedia.text }}" target="_blank"
+      ><i class="{{ socialMedia.icon }} p-2"></i
+    ></a>
+  </ng-container>
+</div>
+<p class="d-flex justify-content-center my-1 py-3">Powered by WorkingBees</p>

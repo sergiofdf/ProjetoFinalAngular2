@@ -1,0 +1,160 @@
+<button
+  type="button"
+  class="btn btn-primary w-auto align-self-center mt-4"
+  data-bs-toggle="modal"
+  data-bs-target="#contactFormModal"
+>
+  Entre em contato
+</button>
+<app-toast
+  (toastEmitter)="createToast($event)"
+  [toastMessage]="'Obrigado por entrar em contato conosco.'"
+></app-toast>
+<div
+  class="modal fade"
+  id="contactFormModal"
+  tabindex="-1"
+  aria-labelledby="contactFormModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content textColorScheme">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="contactFormModalLabel">
+          Entre em contato conosco
+        </h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="contactForm" (ngSubmit)="onSubmit()">
+          <div class="mb-3 form-group">
+            <label for="name" class="col-form-label">Nome:</label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="name"
+              id="name"
+              [ngClass]="{
+                'is-invalid': f['name'].errors && f['name'].touched,
+                'is-valid': !f['name'].errors && f['name'].touched
+              }"
+            />
+            <div
+              *ngIf="f['name'].errors && f['name'].touched"
+              class="invalid-feedback"
+            >
+              <div *ngIf="f['name'].errors['required']">Nome obrigatório</div>
+              <div *ngIf="f['name'].errors['minlength']">
+                Nome deve conter pelo menos 3 letras
+              </div>
+            </div>
+          </div>
+          <div class="mb-3 form-group">
+            <label for="email" class="col-form-label">Email:</label>
+            <input
+              type="email"
+              class="form-control"
+              formControlName="email"
+              id="email"
+              placeholder="email@email.com"
+              [ngClass]="{
+                'is-invalid': f['email'].errors && f['email'].touched,
+                'is-valid': !f['email'].errors && f['email'].touched
+              }"
+            />
+            <div
+              *ngIf="f['email'].errors && f['email'].touched"
+              class="invalid-feedback"
+            >
+              <div *ngIf="f['email'].errors['required']">Email obrigatório</div>
+              <div
+                *ngIf="
+                  f['email'].errors['email'] || f['email'].errors['pattern']
+                "
+              >
+                Email inválido
+              </div>
+            </div>
+          </div>
+          <div class="mb-3 form-group">
+            <label for="phone" class="col-form-label">Celular:</label>
+            <input
+              (keypress)="keyPress($event)"
+              type="text"
+              name="phone"
+              class="form-control"
+              formControlName="phone"
+              id="phone"
+              placeholder="(00) 00000-0000"
+              [ngClass]="{
+                'is-invalid': f['phone'].errors && f['phone'].touched,
+                'is-valid': !f['phone'].errors && f['phone'].touched
+              }"
+            />
+            <div
+              *ngIf="f['phone'].errors && f['phone'].touched"
+              class="invalid-feedback"
+            >
+              <div *ngIf="f['phone'].errors['required']">
+                Número de telefone obrigatório
+              </div>
+              <div
+                *ngIf="
+                  f['phone'].errors['pattern'] ||
+                  f['phone'].errors['maxlength'] ||
+                  f['phone'].errors['minlength']
+                "
+              >
+                Número de telefone deve conter 11 caracteres numéricos
+              </div>
+            </div>
+          </div>
+          <div class="mb-3 form-group">
+            <label for="message" class="col-form-label">Mensagem:</label>
+            <textarea
+              class="form-control"
+              formControlName="message"
+              id="message"
+              [ngClass]="{
+                'is-invalid': f['message'].errors && f['message'].touched,
+                'is-valid': !f['message'].errors && f['message'].touched
+              }"
+            >
+            </textarea>
+            <div
+              *ngIf="f['message'].errors && f['message'].touched"
+              class="invalid-feedback"
+            >
+              <div *ngIf="f['message'].errors['required']">
+                Mensagem obrigatória
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+              (click)="closeForm()"
+            >
+              Fechar
+            </button>
+            <button
+              type="submit"
+              class="btn btn-primary"
+              [disabled]="!contactForm.valid"
+              data-bs-dismiss="modal"
+            >
+              Enviar
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

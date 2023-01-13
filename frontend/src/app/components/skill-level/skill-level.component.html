@@ -1,0 +1,13 @@
+<p>{{ skillTitle }}</p>
+<div class="progress w-100 mx-1 mb-3">
+  <div
+    class="progress-bar footerColorScheme"
+    role="progressbar"
+    [ngStyle]="{ 'width.%': skillLevel }"
+    aria-valuenow="skillLevel"
+    aria-valuemin="0"
+    aria-valuemax="100"
+  >
+    {{ skillLevel }}%
+  </div>
+</div>

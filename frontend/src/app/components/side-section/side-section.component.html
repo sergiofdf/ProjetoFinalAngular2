@@ -1,0 +1,37 @@
+<div class="my-3 shadow bg-white rounded">
+  <div class="d-flex flex-column align-content-start">
+    <img src="{{ contact.imageUrl }}" class="w-100 pb-2" />
+  </div>
+  <div *ngFor="let contactInfo of contact.contactInfo" class="px-3">
+    <app-icon-text
+      [iconElement]="contactInfo.icon"
+      [textElement]="contactInfo.text"
+    ></app-icon-text>
+  </div>
+  <div class="px-3 pb-5">
+    <app-icon-text
+      [iconElement]="'bi bi-trophy-fill'"
+      [textElement]="'Skills'"
+      class="px-2 h3"
+    ></app-icon-text>
+    <div *ngFor="let skill of skills">
+      <app-skill-level
+        [skillTitle]="skill.skillTitle"
+        [skillLevel]="skill.skillLevel"
+      ></app-skill-level>
+    </div>
+  </div>
+  <div class="px-3 pb-5">
+    <app-icon-text
+      [iconElement]="'bi bi-globe-americas'"
+      [textElement]="'Languages'"
+      class="px-2 h3"
+    ></app-icon-text>
+    <div *ngFor="let language of languages">
+      <app-skill-level
+        [skillTitle]="language.skillTitle"
+        [skillLevel]="language.skillLevel"
+      ></app-skill-level>
+    </div>
+  </div>
+</div>
