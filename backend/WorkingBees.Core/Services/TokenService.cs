@@ -19,7 +19,7 @@ namespace WorkingBees.Core.Services
             var key = Encoding.ASCII.GetBytes(_configuration.GetValue<string>("secretKey"));
             var tokenDescriptor = new SecurityTokenDescriptor
             {
-                Expires = DateTime.UtcNow.AddMinutes(15),
+                Expires = DateTime.UtcNow.AddMinutes(60),
                 Subject = new ClaimsIdentity(new Claim[]
                 {
                     new Claim(ClaimTypes.Name, nome),

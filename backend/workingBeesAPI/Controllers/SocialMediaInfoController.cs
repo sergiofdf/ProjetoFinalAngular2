@@ -36,6 +36,7 @@ namespace WorkingBeesAPI.Controllers
         [HttpGet("/socialmediainfos/{userId}/id")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [AllowAnonymous]
         public ActionResult<List<SocialMediaInfo>> ListSocialMediaInfosByUserId(long userId)
         {
             var socialmediainfosList = _socialMediaInfoService.Listallbyuserid(userId);
@@ -47,6 +48,7 @@ namespace WorkingBeesAPI.Controllers
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status409Conflict)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [Authorize(Roles = "Admin")]
         public ActionResult<bool> InsertExperience(SocialMediaInfoDto socialMediaInfoDto)
         {
@@ -59,6 +61,7 @@ namespace WorkingBeesAPI.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [Authorize(Roles = "Admin")]
         public IActionResult UpdateExperience(long id, SocialMediaInfoDto socialMediaInfoDto)
         {
@@ -71,6 +74,7 @@ namespace WorkingBeesAPI.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [Authorize(Roles = "Admin")]
         public IActionResult DeleteExperience(long id)
         {

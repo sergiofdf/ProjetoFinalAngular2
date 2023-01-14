@@ -84,7 +84,7 @@ export class CurriculoComponent {
   public experiencesContainers: ExperienceContainer[] = [
     {
       icon: 'bi bi-bag-fill',
-      title: 'Work Experience',
+      title: 'Experiência Profissional',
       experiences: [
         {
           titleElement: 'Full-Stack Developer / Banco Safra',
@@ -114,7 +114,7 @@ export class CurriculoComponent {
     },
     {
       icon: 'bi bi-mortarboard-fill',
-      title: 'Education',
+      title: 'Experiência Acadêmica',
       experiences: [
         {
           titleElement: 'Engenharia Civil - Poli UPE',
