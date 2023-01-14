@@ -18,7 +18,7 @@ export class UserListComponent implements OnInit, OnDestroy {
   constructor(
     private usersService: UsersService,
     private router: Router
-  ){}
+  ) { }
 
   ngOnInit(): void {
     this.getUsers();
@@ -28,6 +28,14 @@ export class UserListComponent implements OnInit, OnDestroy {
     this.usersService.getUsers().subscribe({
       next: (res) => this.users = res,
       error: (err) => console.log('Erro na listagem de usuários: ', err),
+    })
+  }
+
+  public deleteUser(id: string): void {
+    this.usersService.deleteUser(id).subscribe({
+      next: (res) => console.log(res),
+      error: (err) => console.log('Erro na listagem de usuários: ', err),
+      complete: () => this.getUsers()
     })
   }
 

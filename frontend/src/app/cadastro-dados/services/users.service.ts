@@ -13,4 +13,8 @@ export class UsersService {
   public getUsers(): Observable<User[]> {
     return this.http.get<User[]>('https://localhost:7241/Users');
   }
+
+  public deleteUser(id: string): Observable<any> {
+    return this.http.delete<any>(`https://localhost:7241/Users/${id}`);
+  }
 }
