@@ -15,7 +15,7 @@ namespace WorkingBees.Infra.Data
             _configuration = configuration;
         }
 
-        public List<UserInfo> ListAll()
+        public async Task<List<UserInfo>> ListAllAsync()
         {
             var query = "SELECT * FROM UserInfo;";
 
@@ -23,7 +23,7 @@ namespace WorkingBees.Infra.Data
             {
                 using var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
 
-                return conn.Query<UserInfo>(query).ToList();
+                return (await conn.QueryAsync<UserInfo>(query)).ToList();
             }
             catch (Exception ex)
             {
@@ -32,7 +32,7 @@ namespace WorkingBees.Infra.Data
             }
         }
 
-        public List<UserInfo> ListAllByUserId(long userId)
+        public async Task<List<UserInfo>> ListAllByUserIdAsync(long userId)
         {
             var query = "SELECT * FROM UserInfo WHERE userId=@userId;";
 
@@ -43,7 +43,7 @@ namespace WorkingBees.Infra.Data
             {
                 using var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
 
-                return conn.Query<UserInfo>(query, parameters).ToList();
+                return (await conn.QueryAsync<UserInfo>(query, parameters)).ToList();
             }
             catch (Exception ex)
             {
@@ -51,7 +51,7 @@ namespace WorkingBees.Infra.Data
                 throw;
             }
         }
-        public bool Insert(UserInfo user)
+        public async Task<bool> InsertAsync(UserInfo user)
         {
             var query = "INSERT INTO UserInfo VALUES (@name, @phoneNumber, @email, @city, @state, @profileImageUrl, @userRole);";
 
@@ -61,7 +61,7 @@ namespace WorkingBees.Infra.Data
             {
                 using var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
 
-                return conn.Execute(query, parameters) == 1;
+                return (await conn.ExecuteAsync(query, parameters)) == 1;
             }
             catch (Exception ex)
             {
@@ -70,7 +70,7 @@ namespace WorkingBees.Infra.Data
             }
         }
 
-        public bool Update(long id, UserInfo user)
+        public async Task<bool> UpdateAsync(long id, UserInfo user)
         {
             var query = "UPDATE UserInfo SET name=@name, phoneNumber=@phoneNumber, email=@email, city=@city, state=@state, profileImageUrl=@profileImageUrl, userRole=@userRole WHERE userId=@userId;";
 
@@ -81,7 +81,7 @@ namespace WorkingBees.Infra.Data
             {
                 using var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
 
-                return conn.Execute(query, parameters) == 1;
+                return (await conn.ExecuteAsync(query, parameters)) == 1;
             }
             catch (Exception ex)
             {
@@ -89,7 +89,7 @@ namespace WorkingBees.Infra.Data
                 throw;
             }
         }
-        public bool Delete(long id)
+        public async Task<bool> DeleteAsync(long id)
         {
             var query = "DELETE FROM UserInfo WHERE userId=@id;";
 
@@ -100,7 +100,7 @@ namespace WorkingBees.Infra.Data
             {
                 using var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
 
-                return conn.Execute(query, parameters) == 1;
+                return (await conn.ExecuteAsync(query, parameters)) == 1;
             }
             catch (Exception ex)
             {

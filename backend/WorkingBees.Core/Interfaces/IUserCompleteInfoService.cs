@@ -4,6 +4,6 @@ namespace WorkingBees.Core.Interfaces
 {
     public interface IUserCompleteInfoService
     {
-        public UserCompleteInfo CompileUserInfo(long userId);
+        Task<UserCompleteInfo> CompileUserInfoAsync(long userId);
     }
 }

@@ -22,34 +22,49 @@ namespace WorkingBees.Core.Services
             _socialMediaInfoRepository = socialMediaInfoRepository;
         }
 
-        public List<UserInfo> ListAll()
+        public async Task<List<UserInfo>> ListAllAsync()
         {
-            return _userRepository.ListAll();
+            return await _userRepository.ListAllAsync();
         }
-        public List<UserInfo> Listallbyuserid(long userId)
+        public async Task<List<UserInfo>> ListallbyuseridAsync(long userId)
         {
-            return _userRepository.ListAllByUserId(userId);
+            return await _userRepository.ListAllByUserIdAsync(userId);
         }
-        public bool Insert(UserInfo user)
+        public async Task<bool> InsertAsync(UserInfo userInfo)
         {
-            return _userRepository.Insert(user);
+            return await _userRepository.InsertAsync(userInfo);
         }
-        public bool Update(long id, UserInfo user)
+        public async Task<bool> UpdateAsync(long id, UserInfo userInfo)
         {
-            return _userRepository.Update(id, user);
-        }
-
-        public bool Delete(long id)
-        {
-            return _userRepository.Delete(id);
+            return await _userRepository.UpdateAsync(id, userInfo);
         }
 
-        public UserCompleteInfo CompileUserInfo(long userId)
+        public async Task<bool> DeleteAsync(long userId)
         {
-            UserInfo userInfo = _userRepository.ListAllByUserId(userId)[0];
-            var skills = _skillRepository.ListAllByUserId(userId);
-            var experiences = _experienceRepository.ListAllByUserId(userId);
-            var socialMedias = _socialMediaInfoRepository.ListAllByUserId(userId);
+            var skills = await _skillRepository.ListAllByUserIdAsync(userId);
+            foreach (var skill in skills)
+            {
+                await _skillRepository.DeleteAsync(skill.SkillId);
+            }
+            var experiences = await _experienceRepository.ListAllByUserIdAsync(userId);
+            foreach (var experience in experiences)
+            {
+                await _experienceRepository.DeleteAsync(experience.ExperienceId);
+            }
+            var socialMedias = await _socialMediaInfoRepository.ListAllByUserIdAsync(userId);
+            foreach (var socialMedia in socialMedias)
+            {
+                await _socialMediaInfoRepository.DeleteAsync(socialMedia.SocialMediaInfoId);
+            }
+            return await _userRepository.DeleteAsync(userId);
+        }
+
+        public async Task<UserCompleteInfo> CompileUserInfoAsync(long userId)
+        {
+            UserInfo userInfo = (await _userRepository.ListAllByUserIdAsync(userId)).First();
+            var skills = await _skillRepository.ListAllByUserIdAsync(userId);
+            var experiences = await _experienceRepository.ListAllByUserIdAsync(userId);
+            var socialMedias = await _socialMediaInfoRepository.ListAllByUserIdAsync(userId);
 
             var userCompleteInfo = new UserCompleteInfo(userInfo.UserId, userInfo.Name, userInfo.PhoneNumber, userInfo.Email, userInfo.City, userInfo.State, userInfo.ProfileImageUrl, skills, experiences, socialMedias);
 

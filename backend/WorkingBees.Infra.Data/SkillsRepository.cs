@@ -15,7 +15,7 @@ namespace WorkingBees.Infra.Data
             _configuration = configuration;
         }
 
-        public List<Skill> ListAll()
+        public async Task<List<Skill>> ListAllAsync()
         {
             var query = "SELECT * FROM Skills;";
 
@@ -23,7 +23,7 @@ namespace WorkingBees.Infra.Data
             {
                 using var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
 
-                return conn.Query<Skill>(query).ToList();
+                return (await conn.QueryAsync<Skill>(query)).ToList();
             }
             catch (Exception ex)
             {
@@ -32,7 +32,7 @@ namespace WorkingBees.Infra.Data
             }
         }
 
-        public List<Skill> ListAllByUserId(long userId)
+        public async Task<List<Skill>> ListAllByUserIdAsync(long userId)
         {
             var query = "SELECT * FROM Skills WHERE userId=@userId;";
 
@@ -43,7 +43,7 @@ namespace WorkingBees.Infra.Data
             {
                 using var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
 
-                return conn.Query<Skill>(query, parameters).ToList();
+                return (await conn.QueryAsync<Skill>(query, parameters)).ToList();
             }
             catch (Exception ex)
             {
@@ -51,7 +51,7 @@ namespace WorkingBees.Infra.Data
                 throw;
             }
         }
-        public bool Insert(Skill skill)
+        public async Task<bool> InsertAsync(Skill skill)
         {
             var query = "INSERT INTO Skills VALUES (@userId,@skillType, @title, @progressLevel);";
 
@@ -61,7 +61,7 @@ namespace WorkingBees.Infra.Data
             {
                 using var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
 
-                return conn.Execute(query, parameters) == 1;
+                return (await conn.ExecuteAsync(query, parameters)) == 1;
             }
             catch (Exception ex)
             {
@@ -70,7 +70,7 @@ namespace WorkingBees.Infra.Data
             }
         }
 
-        public bool Update(long id, Skill skill)
+        public async Task<bool> UpdateAsync(long id, Skill skill)
         {
             var query = "UPDATE Skills SET userId=@userId, skillType=@skillType, title=@title, progressLevel=@progressLevel WHERE skillId=@skillId;";
 
@@ -81,7 +81,7 @@ namespace WorkingBees.Infra.Data
             {
                 using var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
 
-                return conn.Execute(query, parameters) == 1;
+                return (await conn.ExecuteAsync(query, parameters)) == 1;
             }
             catch (Exception ex)
             {
@@ -89,7 +89,7 @@ namespace WorkingBees.Infra.Data
                 throw;
             }
         }
-        public bool Delete(long id)
+        public async Task<bool> DeleteAsync(long id)
         {
             var query = "DELETE FROM Skills WHERE skillId=@id;";
 
@@ -100,7 +100,7 @@ namespace WorkingBees.Infra.Data
             {
                 using var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
 
-                return conn.Execute(query, parameters) == 1;
+                return (await conn.ExecuteAsync(query, parameters)) == 1;
             }
             catch (Exception ex)
             {

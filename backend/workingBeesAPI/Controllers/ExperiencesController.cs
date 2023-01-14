@@ -28,18 +28,18 @@ namespace WorkingBeesAPI.Controllers
         [HttpGet("/experiences")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [AllowAnonymous]
-        public ActionResult<List<Experience>> ListAllExperiences()
+        public async Task<ActionResult<List<Experience>>> ListAllExperiences()
         {
-            return Ok(_experienceService.ListAll());
+            return Ok(await _experienceService.ListAllAsync());
         }
 
         [HttpGet("/experiences/{userId}/id")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [AllowAnonymous]
-        public ActionResult<List<Experience>> ListExperiencesByUserId(long userId)
+        public async Task<ActionResult<List<Experience>>> ListExperiencesByUserId(long userId)
         {
-            var experiencesList = _experienceService.Listallbyuserid(userId);
+            var experiencesList = await _experienceService.ListallbyuseridAsync(userId);
             if (experiencesList == null) return NotFound();
             return Ok(experiencesList);
         }
@@ -50,10 +50,10 @@ namespace WorkingBeesAPI.Controllers
         [ProducesResponseType(StatusCodes.Status409Conflict)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [Authorize(Roles = "Admin")]
-        public ActionResult<bool> InsertExperience(ExperienceDto experienceDto)
+        public async Task<ActionResult<bool>> InsertExperience(ExperienceDto experienceDto)
         {
             Experience experienceMapped = _mapper.Map<Experience>(experienceDto);
-            var result = _experienceService.Insert(experienceMapped);
+            var result = await _experienceService.InsertAsync(experienceMapped);
             return CreatedAtAction(nameof(InsertExperience), result);
         }
 
@@ -63,10 +63,10 @@ namespace WorkingBeesAPI.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [Authorize(Roles = "Admin")]
-        public IActionResult UpdateExperience(long id, ExperienceDto experienceDto)
+        public async Task<IActionResult> UpdateExperience(long id, ExperienceDto experienceDto)
         {
             Experience experienceMapped = _mapper.Map<Experience>(experienceDto);
-            _experienceService.Update(id, experienceMapped);
+            await _experienceService.UpdateAsync(id, experienceMapped);
             return NoContent();
         }
 
@@ -76,9 +76,9 @@ namespace WorkingBeesAPI.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [Authorize(Roles = "Admin")]
-        public IActionResult DeleteExperience(long id)
+        public async Task<IActionResult> DeleteExperience(long id)
         {
-            if (!_experienceService.Delete(id))
+            if (!await _experienceService.DeleteAsync(id))
             {
                 return NotFound();
             }

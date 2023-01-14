@@ -11,26 +11,26 @@ namespace WorkingBees.Core.Services
         {
             _socialMediaInfoRepository = socialMediaInfoRepository;
         }
-        public List<SocialMediaInfo> ListAll()
+        public async Task<List<SocialMediaInfo>> ListAllAsync()
         {
-            return _socialMediaInfoRepository.ListAll();
+            return await _socialMediaInfoRepository.ListAllAsync();
         }
-        public List<SocialMediaInfo> Listallbyuserid(long userId)
+        public async Task<List<SocialMediaInfo>> ListallbyuseridAsync(long userId)
         {
-            return _socialMediaInfoRepository.ListAllByUserId(userId);
+            return await _socialMediaInfoRepository.ListAllByUserIdAsync(userId);
         }
-        public bool Insert(SocialMediaInfo socialMediaInfo)
+        public async Task<bool> InsertAsync(SocialMediaInfo socialMedia)
         {
-            return _socialMediaInfoRepository.Insert(socialMediaInfo);
+            return await _socialMediaInfoRepository.InsertAsync(socialMedia);
         }
-        public bool Update(long id, SocialMediaInfo socialMediaInfo)
+        public async Task<bool> UpdateAsync(long id, SocialMediaInfo socialMedia)
         {
-            return _socialMediaInfoRepository.Update(id, socialMediaInfo);
+            return await _socialMediaInfoRepository.UpdateAsync(id, socialMedia);
         }
 
-        public bool Delete(long id)
+        public async Task<bool> DeleteAsync(long id)
         {
-            return _socialMediaInfoRepository.Delete(id);
+            return await _socialMediaInfoRepository.DeleteAsync(id);
         }
     }
 }

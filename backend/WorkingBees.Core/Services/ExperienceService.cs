@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using WorkingBees.Core.Interfaces;
+﻿using WorkingBees.Core.Interfaces;
 using WorkingBees.Core.Models;
 
 namespace WorkingBees.Core.Services
@@ -16,26 +11,26 @@ namespace WorkingBees.Core.Services
         {
             _experienceRepository = experienceRepository;
         }
-        public List<Experience> ListAll()
+        public async Task<List<Experience>> ListAllAsync()
         {
-            return _experienceRepository.ListAll();
+            return await _experienceRepository.ListAllAsync();
         }
-        public List<Experience> Listallbyuserid(long userId)
+        public async Task<List<Experience>> ListallbyuseridAsync(long userId)
         {
-            return _experienceRepository.ListAllByUserId(userId);
+            return await _experienceRepository.ListAllByUserIdAsync(userId);
         }
-        public bool Insert(Experience experience)
+        public async Task<bool> InsertAsync(Experience experience)
         {
-            return _experienceRepository.Insert(experience);
+            return await _experienceRepository.InsertAsync(experience);
         }
-        public bool Update(long id, Experience experience)
+        public async Task<bool> UpdateAsync(long id, Experience experience)
         {
-            return _experienceRepository.Update(id, experience);
+            return await _experienceRepository.UpdateAsync(id, experience);
         }
 
-        public bool Delete(long id)
+        public async Task<bool> DeleteAsync(long id)
         {
-            return _experienceRepository.Delete(id);
+            return await _experienceRepository.DeleteAsync(id);
         }
 
     }

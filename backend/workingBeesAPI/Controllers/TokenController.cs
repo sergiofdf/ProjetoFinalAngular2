@@ -19,7 +19,7 @@ namespace workingBeesAPI.Controllers
         [HttpGet]
         public async Task<IActionResult> CreateToken(long id)
         {
-            var user = _userService.Listallbyuserid(id).FirstOrDefault();
+            var user = (await _userService.ListallbyuseridAsync(id)).FirstOrDefault();
             if (user == null)
             {
                 return BadRequest();

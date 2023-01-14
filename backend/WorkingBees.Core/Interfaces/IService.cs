@@ -2,10 +2,10 @@
 {
     public interface IService<T> where T : class
     {
-        List<T> ListAll();
-        List<T> Listallbyuserid(long userId);
-        bool Insert(T entity);
-        bool Update(long id, T entity);
-        bool Delete(long id);
+        Task<List<T>> ListAllAsync();
+        Task<List<T>> ListallbyuseridAsync(long userId);
+        Task<bool> InsertAsync(T entity);
+        Task<bool> UpdateAsync(long id, T entity);
+        Task<bool> DeleteAsync(long id);
     }
 }

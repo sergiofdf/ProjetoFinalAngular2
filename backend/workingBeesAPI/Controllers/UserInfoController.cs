@@ -29,18 +29,18 @@ namespace WorkingBeesAPI.Controllers
         [HttpGet("/Users")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [AllowAnonymous]
-        public ActionResult<List<UserInfo>> ListAllUsers()
+        public async Task<ActionResult<List<UserInfo>>> ListAllUsers()
         {
-            return Ok(_userService.ListAll());
+            return Ok(await _userService.ListAllAsync());
         }
 
         [HttpGet("/User/{userId}/id")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [AllowAnonymous]
-        public ActionResult<UserInfo> GetUserByUserId(long userId)
+        public async Task<ActionResult<UserInfo>> GetUserByUserId(long userId)
         {
-            var user = _userService.Listallbyuserid(userId).FirstOrDefault();
+            var user = (await _userService.ListallbyuseridAsync(userId)).FirstOrDefault();
             if (user == null) return NotFound();
             return Ok(user);
         }
@@ -49,9 +49,9 @@ namespace WorkingBeesAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [AllowAnonymous]
-        public ActionResult<UserCompleteInfo> GetUserCompleteInfo(long userId)
+        public async Task<ActionResult<UserCompleteInfo>> GetUserCompleteInfo(long userId)
         {
-            var user = _userCompleteInfoService.CompileUserInfo(userId);
+            var user = await _userCompleteInfoService.CompileUserInfoAsync(userId);
             if (user == null) return NotFound();
             return Ok(user);
         }
@@ -62,10 +62,10 @@ namespace WorkingBeesAPI.Controllers
         [ProducesResponseType(StatusCodes.Status409Conflict)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [Authorize(Roles = "Admin")]
-        public ActionResult<bool> InsertUser(UserInfoDto userDto)
+        public async Task<ActionResult<bool>> InsertUser(UserInfoDto userDto)
         {
             UserInfo userMapped = _mapper.Map<UserInfo>(userDto);
-            var result = _userService.Insert(userMapped);
+            var result = await _userService.InsertAsync(userMapped);
             return CreatedAtAction(nameof(InsertUser), result);
         }
 
@@ -75,10 +75,10 @@ namespace WorkingBeesAPI.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [Authorize(Roles = "Admin")]
-        public IActionResult UpdateUser(long id, UserInfoDto userInfoDto)
+        public async Task<IActionResult> UpdateUser(long id, UserInfoDto userInfoDto)
         {
             UserInfo userMapped = _mapper.Map<UserInfo>(userInfoDto);
-            _userService.Update(id, userMapped);
+            await _userService.UpdateAsync(id, userMapped);
             return NoContent();
         }
 
@@ -88,9 +88,9 @@ namespace WorkingBeesAPI.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [Authorize(Roles = "Admin")]
-        public IActionResult DeleteUser(long id)
+        public async Task<IActionResult> DeleteUser(long id)
         {
-            if (!_userService.Delete(id))
+            if (!await _userService.DeleteAsync(id))
             {
                 return NotFound();
             }

@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Dapper;
+﻿using Dapper;
 using Microsoft.Extensions.Configuration;
+using System.Data.SqlClient;
 using WorkingBees.Core.Interfaces;
 using WorkingBees.Core.Models;
 
@@ -20,7 +15,7 @@ namespace WorkingBees.Infra.Data
             _configuration = configuration;
         }
 
-        public List<SocialMediaInfo> ListAll()
+        public async Task<List<SocialMediaInfo>> ListAllAsync()
         {
             var query = "SELECT * FROM SocialMediaInfo;";
 
@@ -28,7 +23,7 @@ namespace WorkingBees.Infra.Data
             {
                 using var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
 
-                return conn.Query<SocialMediaInfo>(query).ToList();
+                return (await conn.QueryAsync<SocialMediaInfo>(query)).ToList();
             }
             catch (Exception ex)
             {
@@ -37,7 +32,7 @@ namespace WorkingBees.Infra.Data
             }
         }
 
-        public List<SocialMediaInfo> ListAllByUserId(long userId)
+        public async Task<List<SocialMediaInfo>> ListAllByUserIdAsync(long userId)
         {
             var query = "SELECT * FROM SocialMediaInfo WHERE userId=@userId;";
 
@@ -48,7 +43,7 @@ namespace WorkingBees.Infra.Data
             {
                 using var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
 
-                return conn.Query<SocialMediaInfo>(query, parameters).ToList();
+                return (await conn.QueryAsync<SocialMediaInfo>(query, parameters)).ToList();
             }
             catch (Exception ex)
             {
@@ -56,7 +51,7 @@ namespace WorkingBees.Infra.Data
                 throw;
             }
         }
-        public bool Insert(SocialMediaInfo socialMediaInfo)
+        public async Task<bool> InsertAsync(SocialMediaInfo socialMediaInfo)
         {
             var query = "INSERT INTO SocialMediaInfo VALUES (@userId,@facebookUrl, @instagramUrl, @githubUrl, @linkedinUrl);";
 
@@ -66,7 +61,7 @@ namespace WorkingBees.Infra.Data
             {
                 using var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
 
-                return conn.Execute(query, parameters) == 1;
+                return (await conn.ExecuteAsync(query, parameters)) == 1;
             }
             catch (Exception ex)
             {
@@ -75,7 +70,7 @@ namespace WorkingBees.Infra.Data
             }
         }
 
-        public bool Update(long id, SocialMediaInfo socialMediaInfo)
+        public async Task<bool> UpdateAsync(long id, SocialMediaInfo socialMediaInfo)
         {
             var query = "UPDATE SocialMediaInfo SET userId=@userId, facebookUrl=@facebookUrl, instagramUrl=@instagramUrl, githubUrl=@githubUrl, linkedinUrl=@linkedinUrl WHERE socialMediaInfoId=@socialMediaInfoId;";
 
@@ -86,7 +81,7 @@ namespace WorkingBees.Infra.Data
             {
                 using var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
 
-                return conn.Execute(query, parameters) == 1;
+                return (await conn.ExecuteAsync(query, parameters)) == 1;
             }
             catch (Exception ex)
             {
@@ -94,7 +89,7 @@ namespace WorkingBees.Infra.Data
                 throw;
             }
         }
-        public bool Delete(long id)
+        public async Task<bool> DeleteAsync(long id)
         {
             var query = "DELETE FROM SocialMediaInfo WHERE socialMediaInfoId=@id;";
 
@@ -105,7 +100,7 @@ namespace WorkingBees.Infra.Data
             {
                 using var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
 
-                return conn.Execute(query, parameters) == 1;
+                return (await conn.ExecuteAsync(query, parameters)) == 1;
             }
             catch (Exception ex)
             {

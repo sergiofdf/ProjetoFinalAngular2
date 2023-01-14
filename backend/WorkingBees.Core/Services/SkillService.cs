@@ -11,26 +11,26 @@ namespace WorkingBees.Core.Services
             _skillRepository = skillRepository;
         }
 
-        public List<Skill> ListAll()
+        public async Task<List<Skill>> ListAllAsync()
         {
-            return _skillRepository.ListAll();
+            return await _skillRepository.ListAllAsync();
         }
-        public List<Skill> Listallbyuserid(long userId)
+        public async Task<List<Skill>> ListallbyuseridAsync(long userId)
         {
-            return _skillRepository.ListAllByUserId(userId);
+            return await _skillRepository.ListAllByUserIdAsync(userId);
         }
-        public bool Insert(Skill skill)
+        public async Task<bool> InsertAsync(Skill skill)
         {
-            return _skillRepository.Insert(skill);
+            return await _skillRepository.InsertAsync(skill);
         }
-        public bool Update(long id, Skill skill)
+        public async Task<bool> UpdateAsync(long id, Skill skill)
         {
-            return _skillRepository.Update(id, skill);
+            return await _skillRepository.UpdateAsync(id, skill);
         }
 
-        public bool Delete(long id)
+        public async Task<bool> DeleteAsync(long id)
         {
-            return _skillRepository.Delete(id);
+            return await _skillRepository.DeleteAsync(id);
         }
     }
 }

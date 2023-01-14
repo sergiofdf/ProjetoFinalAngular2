@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Dapper;
+﻿using Dapper;
 using Microsoft.Extensions.Configuration;
+using System.Data.SqlClient;
 using WorkingBees.Core.Interfaces;
 using WorkingBees.Core.Models;
 
@@ -20,7 +15,7 @@ namespace WorkingBees.Infra.Data
             _configuration = configuration;
         }
 
-        public List<Experience> ListAll()
+        public async Task<List<Experience>> ListAllAsync()
         {
             var query = "SELECT * FROM Experience;";
 
@@ -28,7 +23,7 @@ namespace WorkingBees.Infra.Data
             {
                 using var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
 
-                return conn.Query<Experience>(query).ToList();
+                return (await conn.QueryAsync<Experience>(query)).ToList();
             }
             catch (Exception ex)
             {
@@ -37,7 +32,7 @@ namespace WorkingBees.Infra.Data
             }
         }
 
-        public List<Experience> ListAllByUserId(long userId)
+        public async Task<List<Experience>> ListAllByUserIdAsync(long userId)
         {
             var query = "SELECT * FROM Experience WHERE userId=@userId;";
 
@@ -48,7 +43,7 @@ namespace WorkingBees.Infra.Data
             {
                 using var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
 
-                return conn.Query<Experience>(query, parameters).ToList();
+                return (await conn.QueryAsync<Experience>(query, parameters)).ToList();
             }
             catch (Exception ex)
             {
@@ -56,7 +51,7 @@ namespace WorkingBees.Infra.Data
                 throw;
             }
         }
-        public bool Insert(Experience experience)
+        public async Task<bool> InsertAsync(Experience experience)
         {
             var query = "INSERT INTO Experience VALUES (@userId,@experienceType, @title, @initialDate, @finalDate, @expDescription);";
 
@@ -66,7 +61,7 @@ namespace WorkingBees.Infra.Data
             {
                 using var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
 
-                return conn.Execute(query, parameters) == 1;
+                return (await conn.ExecuteAsync(query, parameters)) == 1;
             }
             catch (Exception ex)
             {
@@ -75,7 +70,7 @@ namespace WorkingBees.Infra.Data
             }
         }
 
-        public bool Update(long id, Experience experience)
+        public async Task<bool> UpdateAsync(long id, Experience experience)
         {
             var query = "UPDATE Experience SET userId=@userId, experienceType=@experienceType, title=@title, initialDate=@initialDate, finalDate=@finalDate, expDescription=@expDescription  WHERE experienceId=@experienceId;";
 
@@ -86,7 +81,7 @@ namespace WorkingBees.Infra.Data
             {
                 using var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
 
-                return conn.Execute(query, parameters) == 1;
+                return (await conn.ExecuteAsync(query, parameters)) == 1;
             }
             catch (Exception ex)
             {
@@ -94,7 +89,7 @@ namespace WorkingBees.Infra.Data
                 throw;
             }
         }
-        public bool Delete(long id)
+        public async Task<bool> DeleteAsync(long id)
         {
             var query = "DELETE FROM Experience WHERE experienceId=@id;";
 
@@ -105,7 +100,7 @@ namespace WorkingBees.Infra.Data
             {
                 using var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
 
-                return conn.Execute(query, parameters) == 1;
+                return (await conn.ExecuteAsync(query, parameters)) == 1;
             }
             catch (Exception ex)
             {

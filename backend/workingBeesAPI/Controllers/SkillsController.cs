@@ -27,18 +27,18 @@ namespace workingBeesAPI.Controllers
         [HttpGet("/Skills")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [AllowAnonymous]
-        public ActionResult<List<Skill>> ListAllSkills()
+        public async Task<ActionResult<List<Skill>>> ListAllSkills()
         {
-            return Ok(_skillService.ListAll());
+            return Ok(await _skillService.ListAllAsync());
         }
 
         [HttpGet("/Skills/{userId}/id")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [AllowAnonymous]
-        public ActionResult<List<Skill>> ListSkillsByUserId(long userId)
+        public async Task<ActionResult<List<Skill>>> ListSkillsByUserId(long userId)
         {
-            var skillsList = _skillService.Listallbyuserid(userId);
+            var skillsList = await _skillService.ListallbyuseridAsync(userId);
             if (skillsList == null) return NotFound();
             return Ok(skillsList);
         }
@@ -49,10 +49,10 @@ namespace workingBeesAPI.Controllers
         [ProducesResponseType(StatusCodes.Status409Conflict)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [Authorize(Roles = "Admin")]
-        public ActionResult<bool> InsertSkill(SkillDto skillDto)
+        public async Task<ActionResult<bool>> InsertSkill(SkillDto skillDto)
         {
             Skill skillMapped = _mapper.Map<Skill>(skillDto);
-            var result = _skillService.Insert(skillMapped);
+            var result = await _skillService.InsertAsync(skillMapped);
             return CreatedAtAction(nameof(InsertSkill), result);
         }
 
@@ -62,10 +62,10 @@ namespace workingBeesAPI.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [Authorize(Roles = "Admin")]
-        public IActionResult UpdateSkill(long id, SkillDto skillDto)
+        public async Task<IActionResult> UpdateSkill(long id, SkillDto skillDto)
         {
             Skill skillMapped = _mapper.Map<Skill>(skillDto);
-            _skillService.Update(id, skillMapped);
+            await _skillService.UpdateAsync(id, skillMapped);
             return NoContent();
         }
 
@@ -75,9 +75,9 @@ namespace workingBeesAPI.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [Authorize(Roles = "Admin")]
-        public IActionResult DeleteSkill(long id)
+        public async Task<IActionResult> DeleteSkill(long id)
         {
-            if (!_skillService.Delete(id))
+            if (!await _skillService.DeleteAsync(id))
             {
                 return NotFound();
             }

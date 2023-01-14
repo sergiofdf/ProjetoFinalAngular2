@@ -28,18 +28,18 @@ namespace WorkingBeesAPI.Controllers
         [HttpGet("/socialmediainfos")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [AllowAnonymous]
-        public ActionResult<List<SocialMediaInfo>> ListAllSocialMediaInfos()
+        public async Task<ActionResult<List<SocialMediaInfo>>> ListAllSocialMediaInfos()
         {
-            return Ok(_socialMediaInfoService.ListAll());
+            return Ok(await _socialMediaInfoService.ListAllAsync());
         }
 
         [HttpGet("/socialmediainfos/{userId}/id")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [AllowAnonymous]
-        public ActionResult<List<SocialMediaInfo>> ListSocialMediaInfosByUserId(long userId)
+        public async Task<ActionResult<List<SocialMediaInfo>>> ListSocialMediaInfosByUserId(long userId)
         {
-            var socialmediainfosList = _socialMediaInfoService.Listallbyuserid(userId);
+            var socialmediainfosList = await _socialMediaInfoService.ListallbyuseridAsync(userId);
             if (socialmediainfosList == null) return NotFound();
             return Ok(socialmediainfosList);
         }
@@ -50,10 +50,10 @@ namespace WorkingBeesAPI.Controllers
         [ProducesResponseType(StatusCodes.Status409Conflict)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [Authorize(Roles = "Admin")]
-        public ActionResult<bool> InsertExperience(SocialMediaInfoDto socialMediaInfoDto)
+        public async Task<ActionResult<bool>> InsertExperience(SocialMediaInfoDto socialMediaInfoDto)
         {
             SocialMediaInfo socialMediaInfoMapped = _mapper.Map<SocialMediaInfo>(socialMediaInfoDto);
-            var result = _socialMediaInfoService.Insert(socialMediaInfoMapped);
+            var result = await _socialMediaInfoService.InsertAsync(socialMediaInfoMapped);
             return CreatedAtAction(nameof(InsertExperience), result);
         }
 
@@ -63,10 +63,10 @@ namespace WorkingBeesAPI.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [Authorize(Roles = "Admin")]
-        public IActionResult UpdateExperience(long id, SocialMediaInfoDto socialMediaInfoDto)
+        public async Task<IActionResult> UpdateExperience(long id, SocialMediaInfoDto socialMediaInfoDto)
         {
             SocialMediaInfo socialMediaInfoMapped = _mapper.Map<SocialMediaInfo>(socialMediaInfoDto);
-            _socialMediaInfoService.Update(id, socialMediaInfoMapped);
+            await _socialMediaInfoService.UpdateAsync(id, socialMediaInfoMapped);
             return NoContent();
         }
 
@@ -76,9 +76,9 @@ namespace WorkingBeesAPI.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [Authorize(Roles = "Admin")]
-        public IActionResult DeleteExperience(long id)
+        public async Task<IActionResult> DeleteExperience(long id)
         {
-            if (!_socialMediaInfoService.Delete(id))
+            if (!await _socialMediaInfoService.DeleteAsync(id))
             {
                 return NotFound();
             }
