@@ -1,0 +1,55 @@
+<div class="container">
+  <div class="row my-4">
+    <p *ngIf="!users?.length" class="d-flex justify-content-center">
+      Não há usuários cadastrados ainda
+    </p>
+    <div class="col-4" *ngFor="let user of users">
+      <mat-card class="example-card">
+        <mat-card-header>
+          <mat-card-title>{{ user.name }}</mat-card-title>
+          <mat-card-subtitle>
+            <strong>ID: </strong>
+            {{ user.userId }}</mat-card-subtitle>
+        </mat-card-header>
+
+        <mat-divider class="my-3"></mat-divider>
+
+        <mat-card-content>
+          <p>
+            <strong>Telefone:</strong>
+            {{ user.phoneNumber | mask : "(00) 90000-0000" }}
+          </p>
+          <p>
+            <strong>E-mail:</strong>
+            {{ user.email }}
+          </p>
+          <p>
+            <strong>Cidade:</strong>
+            {{ user.city }}
+          </p>
+          <p>
+            <strong>Estado:</strong>
+            {{ user.state }}
+          </p>
+          <p>
+            <strong>URL Imagem:</strong>
+            {{ user.profileImageUrl }}
+          </p>
+          <p>
+            <strong>Permissão de Acesso:</strong>
+            {{ user.userRole }}
+          </p>
+        </mat-card-content>
+        <mat-card-actions class="d-flex justify-content-end">
+          <button mat-icon-button color="primary">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button color="warn">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </div>
+</div>
+

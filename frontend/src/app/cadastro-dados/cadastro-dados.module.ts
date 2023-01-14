@@ -1,3 +1,4 @@
+import { CadastroDadosRoutingModule } from './cadastro-dados-routing.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -9,6 +10,8 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { UserListComponent } from './user-list/user-list.component';
+import { CadastroDados } from './cadastro-dados.component';
 
 const material = [
   MatIconModule,
@@ -21,12 +24,16 @@ const material = [
 ];
 
 @NgModule({
-  declarations: [],
+  declarations: [
+    CadastroDados,
+    UserListComponent
+  ],
   imports: [
     CommonModule,
     ReactiveFormsModule,
     NgxMaskDirective,
     NgxMaskPipe,
+    CadastroDadosRoutingModule,
     material
   ],
   providers: [provideNgxMask()]
