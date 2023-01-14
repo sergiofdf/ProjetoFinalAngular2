@@ -1,10 +1,11 @@
+import { CadastroDadosModule } from './cadastro-dados/cadastro-dados.module';
 import { CurriculoModule } from './curriculo/curriculo.module';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { ReactiveFormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -12,10 +13,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
   ],
   imports: [
     BrowserModule,
-    ReactiveFormsModule,
     AppRoutingModule,
+    BrowserAnimationsModule,
+    HttpClientModule,
     CurriculoModule,
-    BrowserAnimationsModule
+    CadastroDadosModule
   ],
   providers: [],
   bootstrap: [AppComponent]
