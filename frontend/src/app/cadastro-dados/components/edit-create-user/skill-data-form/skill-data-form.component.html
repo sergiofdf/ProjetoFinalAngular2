@@ -1,0 +1,38 @@
+<mat-card class="skill-card">
+  <mat-card-header class="d-flex align-items-center justify-content-between">
+    <mat-card-title>
+      Competência
+    </mat-card-title>
+    <button mat-icon-button color="warn">
+      <mat-icon>delete</mat-icon>
+    </button>
+  </mat-card-header>
+  <form [formGroup]="skillForm">
+    <fieldset>
+      <div class="row">
+          <mat-form-field appearance="outline">
+            <mat-label>Tipo de competência</mat-label>
+            <input formControlName="skillType" matInput />
+            <mat-error>Campo tipo inválido</mat-error>
+          </mat-form-field>
+      </div>
+      <div class="row">
+          <mat-form-field appearance="outline" class="col-6">
+            <mat-label>Título</mat-label>
+            <input formControlName="title"
+            matInput />
+            <mat-error>Campo título inválido</mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="col-6">
+            <mat-label>Nível</mat-label>
+            <input formControlName="progressLevel"
+            matInput />
+            <mat-error>Campo título inválido</mat-error>
+          </mat-form-field>
+      </div>
+    </fieldset>
+  </form>
+</mat-card>
+
+
+

@@ -1,3 +1,4 @@
+import { EditCreateUserComponent } from './components/edit-create-user/edit-create-user.component';
 import { UserListComponent } from './user-list/user-list.component';
 import { CadastroDados } from './cadastro-dados.component';
 import { NgModule } from '@angular/core';
@@ -12,6 +13,10 @@ const routes: Routes = [
       {
         path: '',
         component: UserListComponent
+      },
+       {
+        path: 'create',
+        component: EditCreateUserComponent
       },
     ]
   }

@@ -1,0 +1,67 @@
+  <form [formGroup]="userForm">
+    <fieldset>
+      <legend class="mt-4 mb-3">Dados pessoais</legend>
+      <div class="row">
+          <mat-form-field appearance="outline">
+            <mat-label>Nome</mat-label>
+            <input formControlName="name" matInput />
+            <mat-error>Campo nome inválido</mat-error>
+          </mat-form-field>
+      </div>
+      <div class="row">
+          <mat-form-field appearance="outline">
+            <mat-label>Telefone</mat-label>
+            <input formControlName="phoneNumber"
+            mask="(00)90000-0000"
+            matInput />
+            <mat-error>Campo telefone inválido</mat-error>
+          </mat-form-field>
+      </div>
+      <div class="row">
+          <mat-form-field appearance="outline">
+            <mat-label>E-mail</mat-label>
+            <input formControlName="email" matInput />
+            <mat-error>Campo email inválido</mat-error>
+          </mat-form-field>
+      </div>
+      <div class="row">
+          <mat-form-field appearance="outline" class="col-8">
+            <mat-label>Cidade</mat-label>
+            <input
+              formControlName="city"
+              matInput
+            />
+            <mat-error>Campo cidade inválido</mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="col-4">
+            <mat-label>Estado</mat-label>
+            <mat-select formControlName="state">
+              <mat-option *ngFor="let state of states" [value]="state.abbr">{{
+                state.name
+              }}</mat-option>
+            </mat-select>
+            <mat-error>Campo estado inválido</mat-error>
+          </mat-form-field>
+      </div>
+      <div class="row">
+          <mat-form-field appearance="outline" class="col-8">
+            <mat-label>URL Imagem Perfil</mat-label>
+            <input
+              formControlName="profileImageUrl"
+              matInput
+            />
+            <mat-error>Campo url inválido</mat-error>
+          </mat-form-field>
+        <mat-form-field appearance="outline" class="col-4">
+          <mat-label>Permissão de acesso</mat-label>
+          <mat-select formControlName="userRole">
+            <mat-option *ngFor="let role of roles" [value]="role.roleName">{{
+              role.roleName
+            }}</mat-option>
+          </mat-select>
+          <mat-error>Campo permissão inválido</mat-error>
+        </mat-form-field>
+    </div>
+    </fieldset>
+  </form>
+

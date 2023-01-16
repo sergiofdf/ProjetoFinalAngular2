@@ -1,0 +1,39 @@
+<mat-card class="social-media-card">
+  <mat-card-header class="d-flex align-items-center justify-content-between">
+    <mat-card-title>
+      Links das Redes Sociais
+    </mat-card-title>
+  </mat-card-header>
+  <form [formGroup]="socialMediaForm">
+    <fieldset>
+      <div class="row">
+        <mat-form-field appearance="outline">
+          <mat-label>Facebook</mat-label>
+          <input formControlName="facebookUrl" matInput />
+          <mat-error>Campo inválido</mat-error>
+        </mat-form-field>
+      </div>
+      <div class="row">
+        <mat-form-field appearance="outline">
+          <mat-label>Instagram</mat-label>
+          <input formControlName="instagramUrl" matInput />
+          <mat-error>Campo inválido</mat-error>
+        </mat-form-field>
+      </div>
+      <div class="row">
+        <mat-form-field appearance="outline">
+          <mat-label>Github</mat-label>
+          <input formControlName="githubUrl" matInput />
+          <mat-error>Campo inválido</mat-error>
+        </mat-form-field>
+      </div>
+      <div class="row">
+        <mat-form-field appearance="outline">
+          <mat-label>Linkedin</mat-label>
+          <input formControlName="linkedinUrl" matInput />
+          <mat-error>Campo inválido</mat-error>
+        </mat-form-field>
+      </div>
+    </fieldset>
+  </form>
+</mat-card>

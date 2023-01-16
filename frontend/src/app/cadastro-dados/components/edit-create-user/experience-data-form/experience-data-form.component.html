@@ -1,0 +1,48 @@
+<mat-card class="example-card">
+  <mat-card-header class="d-flex align-items-center justify-content-between">
+    <mat-card-title>
+      {{ experienceType }}
+    </mat-card-title>
+    <button mat-icon-button color="warn">
+      <mat-icon>delete</mat-icon>
+    </button>
+  </mat-card-header>
+  <form [formGroup]="experienceForm">
+    <fieldset>
+      <div class="row">
+          <mat-form-field appearance="outline">
+            <mat-label>Título</mat-label>
+            <input formControlName="title" matInput />
+            <mat-error>Campo título inválido</mat-error>
+          </mat-form-field>
+      </div>
+      <div class="row">
+          <mat-form-field appearance="outline" class="col-6">
+            <mat-label>Data Inicial</mat-label>
+            <input formControlName="initialDate"
+            mask="d0/M0/0000"
+            [leadZeroDateTime]="true"
+            matInput />
+            <mat-error>Campo data inválido</mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="col-6">
+            <mat-label>Data Final</mat-label>
+            <input formControlName="finalDate" matInput />
+            <mat-error>Campo data inválido</mat-error>
+          </mat-form-field>
+      </div>
+      <div class="row">
+          <mat-form-field appearance="outline" class="col-8">
+            <mat-label>Descrição</mat-label>
+            <textarea matInput
+              formControlName="expDescription"
+              matInput
+            ></textarea>
+            <mat-error>Campo descrição inválido</mat-error>
+          </mat-form-field>
+      </div>
+    </fieldset>
+  </form>
+</mat-card>
+
+
