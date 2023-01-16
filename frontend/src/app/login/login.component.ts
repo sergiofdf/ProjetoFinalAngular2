@@ -66,18 +66,18 @@ export class LoginComponent {
 
     if (this.userId) {
       this.loginService.getToken(this.userId)
-        .subscribe({
-          next: (res) => {
-            console.log(res);
+        .subscribe(
+          (responseData) => {
+            console.log(responseData);
             this.userId = 0;
             this.loginForm.reset();
             this.router.navigate(['/cadastro-dados']);
           },
-          error: (err) => {
+          (error) => {
             console.log('caiu no erro');
-            console.log(err);
+            console.log(error);
           }
-        });
+        );
     } else {
       this.errorMessage = true;
     }
