@@ -1,3 +1,4 @@
+import { LoginRoutingModule } from './login-routing.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -12,7 +13,6 @@ import { CadastroDadosRoutingModule } from '../cadastro-dados/cadastro-dados-rou
 @NgModule({
   declarations: [
     LoginComponent,
-
   ],
   imports: [
     CommonModule,
@@ -21,9 +21,7 @@ import { CadastroDadosRoutingModule } from '../cadastro-dados/cadastro-dados-rou
     ReactiveFormsModule,
     NgxMaskDirective,
     NgxMaskPipe,
-    CadastroDadosRoutingModule,
-
-
+    LoginRoutingModule,
   ],
   providers: [provideNgxMask()]
 })

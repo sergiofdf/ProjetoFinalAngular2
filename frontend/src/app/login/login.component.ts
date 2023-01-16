@@ -12,50 +12,50 @@ import { LoginService } from './services/login.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
-  public get usersService(): UsersService {
-    return this._usersService;
-  }
-  public set usersService(value: UsersService) {
-    this._usersService = value;
-  }
+  // public get usersService(): UsersService {
+  //   return this._usersService;
+  // }
+  // public set usersService(value: UsersService) {
+  //   this._usersService = value;
+  // }
 
-  public form!: FormGroup;
+  public loginForm!: FormGroup;
   public userId!: number;
   public users!: User[];
 
 
   constructor(
     private loginService: LoginService,
-    private _usersService: UsersService,
+    private usersService: UsersService,
     private router: Router
   ) { }
 
   ngOnInit() {
-    this.getUsers();
+    // this.getUsers();
     this.buildForm();
   }
 
 
   private buildForm(): void {
-    this.form = new FormGroup({
+    this.loginForm = new FormGroup({
       loginId: new FormControl(null, [Validators.required]),
       password: new FormControl(null, [Validators.required]),
     })
   }
 
-  public getUsers(): void {
-    this.usersService.getUsers().subscribe({
-      next: (res) => this.users = res,
-      error: (err) => console.log('Erro na listagem de usuários: ', err),
-    })
-  }
+  // public getUsers(): void {
+  //   this.usersService.getUsers().subscribe({
+  //     next: (res) => this.users = res,
+  //     error: (err) => console.log('Erro na listagem de usuários: ', err),
+  //   })
+  // }
 
   public onSubmit(): void {
 
-    const userPassword = this.form.getRawValue();
+    const userPassword = this.loginForm.getRawValue();
 
     this.users.map(user => {
-      console.log(this.form);
+      console.log(this.loginForm);
       //if (user.name === userPassword.
     })
 
