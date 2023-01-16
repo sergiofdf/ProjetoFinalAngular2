@@ -22,6 +22,7 @@ export class LoginComponent {
   public loginForm!: FormGroup;
   public userId!: number;
   public users!: User[];
+  public errorMessage: boolean = false;
 
 
   constructor(
@@ -31,64 +32,59 @@ export class LoginComponent {
   ) { }
 
   ngOnInit() {
-    // this.getUsers();
+    this.getUsers();
     this.buildForm();
   }
 
 
   private buildForm(): void {
     this.loginForm = new FormGroup({
-      loginId: new FormControl(null, [Validators.required]),
+      email: new FormControl(null, [Validators.required]),
       password: new FormControl(null, [Validators.required]),
     })
   }
 
-  // public getUsers(): void {
-  //   this.usersService.getUsers().subscribe({
-  //     next: (res) => this.users = res,
-  //     error: (err) => console.log('Erro na listagem de usuários: ', err),
-  //   })
-  // }
+  public getUsers(): void {
+    this.usersService.getUsers().subscribe({
+      next: (res) => this.users = res,
+      error: (err) => console.log('Erro na listagem de usuários: ', err),
+    })
+  }
 
   public onSubmit(): void {
 
     const userPassword = this.loginForm.getRawValue();
     console.log(userPassword);
     this.users.map(user => {
-      console.log(this.loginForm);
-      //if (user.name === userPassword.
+      console.log(user);
+      if (userPassword.email === user.email /*&& userPassword.password === user.password*/)
+        this.userId = Number(user.userId);
+      console.log('USERID: ', this.userId)
     })
 
 
 
-    /*if (userPassword) {
-      this.loginService.getToken(userPassword.password)
+    if (this.userId) {
+      this.loginService.getToken(this.userId)
         .subscribe({
           next: (res) => {
             console.log(res);
+            this.userId = 0;
+            this.loginForm.reset();
+            this.router.navigate(['/cadastro-dados']);
           },
           error: (err) => {
             console.log(err);
           }
         });
     } else {
-      this.usersService.saveUser(user)
-        .subscribe({
-          next: (res) => {
-            console.log(res);
-          },
-          error: (err) => {
-            console.log(err);
-          }
-        });
+      this.errorMessage = true;
     }
 
-    this.form.reset();
-    this.router.navigate(['/users']);
-  }*/
+
+  }
 }
 
-}
 
 
 
