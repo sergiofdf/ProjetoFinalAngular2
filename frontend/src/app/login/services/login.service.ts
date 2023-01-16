@@ -7,12 +7,12 @@ import { Observable } from 'rxjs';
 })
 export class LoginService {
 
-constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) { }
 
 
   public getToken(id: number): Observable<string> {
 
 
-    return this.http.get<string>('http://localhost:7421/Token?id=' + id);
+    return this.http.get<string>(`https://localhost:7241/Token/${id}`);
   }
 }

@@ -74,6 +74,7 @@ export class LoginComponent {
             this.router.navigate(['/cadastro-dados']);
           },
           error: (err) => {
+            console.log('caiu no erro');
             console.log(err);
           }
         });

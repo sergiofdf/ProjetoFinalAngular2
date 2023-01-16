@@ -16,7 +16,7 @@ namespace workingBeesAPI.Controllers
 			_tokenService = tokenService;
 		}
 
-		[HttpGet]
+		[HttpGet("/Token/{id}")]
 		public async Task<IActionResult> CreateToken(long id)
 		{
 			var user = (await _userService.ListallbyuseridAsync(id)).FirstOrDefault();
