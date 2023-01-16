@@ -57,32 +57,29 @@ export class LoginComponent {
     console.log(userPassword);
     this.users.map(user => {
       console.log(user);
-      if (userPassword.email === user.email /*&& userPassword.password === user.password*/)
+      if (userPassword.email === user.email /*&& userPassword.password === user.password*/) {
         this.userId = Number(user.userId);
-      console.log('USERID: ', this.userId)
+      } else {
+        localStorage.removeItem('bearer');
+      }
     })
-
-
 
     if (this.userId) {
       this.loginService.getToken(this.userId)
         .subscribe(
           (responseData) => {
-            console.log(responseData);
             this.userId = 0;
             this.loginForm.reset();
+            localStorage.setItem('bearer', responseData);
             this.router.navigate(['/cadastro-dados']);
           },
           (error) => {
-            console.log('caiu no erro');
             console.log(error);
           }
         );
     } else {
       this.errorMessage = true;
     }
-
-
   }
 }
 
