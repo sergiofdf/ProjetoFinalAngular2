@@ -1,5 +1,5 @@
 import { EditCreateUserComponent } from './components/edit-create-user/edit-create-user.component';
-import { UserListComponent } from './user-list/user-list.component';
+import { UserListComponent } from './components/user-list/user-list.component';
 import { CadastroDados } from './cadastro-dados.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';

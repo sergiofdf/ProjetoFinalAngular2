@@ -10,7 +10,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { UserListComponent } from './user-list/user-list.component';
+import { UserListComponent } from './components/user-list/user-list.component';
 import { CadastroDados } from './cadastro-dados.component';
 import { EditCreateUserComponent } from './components/edit-create-user/edit-create-user.component';
 import { UserDataFormComponent } from './components/edit-create-user/user-data-form/user-data-form.component';
