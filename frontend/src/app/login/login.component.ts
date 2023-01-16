@@ -53,7 +53,7 @@ export class LoginComponent {
   public onSubmit(): void {
 
     const userPassword = this.loginForm.getRawValue();
-
+    console.log(userPassword);
     this.users.map(user => {
       console.log(this.loginForm);
       //if (user.name === userPassword.
