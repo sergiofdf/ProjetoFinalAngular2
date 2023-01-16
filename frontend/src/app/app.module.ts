@@ -1,3 +1,4 @@
+import { LoginModule } from './login/login.module';
 import { CadastroDadosModule } from './cadastro-dados/cadastro-dados.module';
 import { CurriculoModule } from './curriculo/curriculo.module';
 import { NgModule } from '@angular/core';
@@ -17,7 +18,8 @@ import { HttpClientModule } from '@angular/common/http';
     BrowserAnimationsModule,
     HttpClientModule,
     CurriculoModule,
-    CadastroDadosModule
+    CadastroDadosModule,
+    LoginModule
   ],
   providers: [],
   bootstrap: [AppComponent]
