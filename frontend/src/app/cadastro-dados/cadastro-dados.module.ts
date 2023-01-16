@@ -34,8 +34,6 @@ const material = [
     UserListComponent,
     EditCreateUserComponent,
     UserDataFormComponent,
-    ExperienceDataFormComponent,
-    SkillDataFormComponent,
     SocialMediaFormComponent
   ],
   imports: [
@@ -44,7 +42,9 @@ const material = [
     NgxMaskDirective,
     NgxMaskPipe,
     CadastroDadosRoutingModule,
-    material
+    material,
+    ExperienceDataFormComponent,
+    SkillDataFormComponent,
   ],
   providers: [provideNgxMask()]
 })

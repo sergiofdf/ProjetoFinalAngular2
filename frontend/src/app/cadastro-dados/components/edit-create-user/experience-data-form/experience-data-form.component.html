@@ -3,7 +3,7 @@
     <mat-card-title>
       {{ experienceType }}
     </mat-card-title>
-    <button mat-icon-button color="warn">
+    <button *ngIf="workExpId>=0" mat-icon-button color="warn" (click)="removeMe()">
       <mat-icon>delete</mat-icon>
     </button>
   </mat-card-header>

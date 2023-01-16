@@ -3,7 +3,7 @@
     <mat-card-title>
       Competência
     </mat-card-title>
-    <button mat-icon-button color="warn">
+    <button *ngIf="skillId>=0" mat-icon-button color="warn" (click)="removeMe()">
       <mat-icon>delete</mat-icon>
     </button>
   </mat-card-header>

@@ -2,8 +2,9 @@
   <app-user-data-form></app-user-data-form>
 
   <app-experience-data-form [experienceType]="'Experiência Profissional'"></app-experience-data-form>
+  <ng-container #container></ng-container>
   <div class="mt-3">
-    <button mat-flat-button color="primary">
+    <button mat-flat-button color="primary" (click)="addWorkExperienceForm()">
       + Exp. Profissional
     </button>
   </div>
@@ -16,8 +17,9 @@
   </div>
 
   <app-skill-data-form></app-skill-data-form>
+  <ng-container #skillsContainer></ng-container>
   <div class="mt-3">
-    <button mat-flat-button color="primary">
+    <button mat-flat-button color="primary" (click)="addSkillForm()">
       + Competência
     </button>
   </div>
