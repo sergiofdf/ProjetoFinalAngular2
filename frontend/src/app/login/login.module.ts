@@ -7,6 +7,7 @@ import { LoginComponent } from './login.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
 import { CadastroDadosRoutingModule } from '../cadastro-dados/cadastro-dados-routing.module';
+import { MatInputModule } from '@angular/material/input';
 
 
 
@@ -22,6 +23,7 @@ import { CadastroDadosRoutingModule } from '../cadastro-dados/cadastro-dados-rou
     NgxMaskDirective,
     NgxMaskPipe,
     LoginRoutingModule,
+    MatInputModule
   ],
   providers: [provideNgxMask()]
 })

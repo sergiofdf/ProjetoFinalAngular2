@@ -21,12 +21,7 @@
       <span *ngIf="errorMessage">Usuário ou senha inválidos.</span>
     </fieldset>
     <div class="mt-3">
-      <button
-        type="submit"
-        mat-flat-button
-        color="primary"
-        [disabled]="loginForm.invalid"
-      >
+      <button type="submit" mat-flat-button color="primary" [disabled]="loginForm.invalid">
         Entrar
       </button>
     </div>
