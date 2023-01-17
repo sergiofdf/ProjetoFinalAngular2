@@ -1,3 +1,4 @@
+import { Experience } from '../../../models/experience.model';
 import { EditCreateUserComponent } from './../edit-create-user.component';
 import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
@@ -14,9 +15,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
-import { Router, ActivatedRoute } from '@angular/router';
 import { NgxMaskDirective, NgxMaskPipe } from 'ngx-mask';
-import { UsersService } from 'src/app/cadastro-dados/services/users.service';
 
 @Component({
   selector: 'app-experience-data-form',
@@ -49,9 +48,9 @@ export class ExperienceDataFormComponent implements OnInit {
     this.buildExperienceForm();
   }
 
-  private buildExperienceForm(): void {
+  public buildExperienceForm(): void {
     this.experienceForm = new FormGroup({
-      userId: new FormControl(),
+      userId: new FormControl(null),
       experienceId: new FormControl(null, [Validators.required]),
       experienceType: new FormControl(null, [Validators.required]),
       title: new FormControl(null, [Validators.required]),

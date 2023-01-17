@@ -1,9 +1,12 @@
+import { Experience } from '../../cadastro-dados/models/experience.model';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Role } from '../models/role.model';
 import { State } from '../models/state.model';
 import { User } from '../models/user.model';
+import { Skill } from '../models/skill.model';
+import { SocialMedia } from '../models/social-media.model';
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +21,22 @@ export class UsersService {
 
   public getUsers(): Observable<User[]> {
     return this.http.get<User[]>('https://localhost:7241/Users');
+  }
+
+  public getUserById(id: string): Observable<User> {
+    return this.http.get<User>(`https://localhost:7241/User/${id}/id`);
+  }
+
+  public getExperiencesByUserId(id: string): Observable<Experience[]> {
+    return this.http.get<Experience[]>(`https://localhost:7241/experiences/${id}/id`);
+  }
+
+  public getSkillsByUserId(id: string): Observable<Skill[]> {
+    return this.http.get<Skill[]>(`https://localhost:7241/Skills/${id}/id`);
+  }
+
+  public getSocialMediaByUserId(id: string): Observable<SocialMedia> {
+    return this.http.get<SocialMedia>(`https://localhost:7241/socialmediainfos/${id}/id`);
   }
 
   public createUser(user: any): Observable<any>{
