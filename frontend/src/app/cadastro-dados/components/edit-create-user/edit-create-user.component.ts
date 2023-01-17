@@ -52,7 +52,7 @@ export class EditCreateUserComponent implements OnInit {
     private usersService: UsersService,
     private router: Router,
     private route: ActivatedRoute
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     if (this.router.url.includes('create')) {
@@ -283,15 +283,31 @@ export class EditCreateUserComponent implements OnInit {
 
     if (this.workExpReferences.length > 0) {
       this.workExpReferences.map((workExp) => {
-        this.usersService
-          .updateExperiencesByUserId(workExp.instance.experienceData)
-          .subscribe({
-            error: (err) =>
-              console.log(
-                'Erro ao atualizar experiência profissional do usuário: ',
-                err
-              ),
-          });
+        if (workExp.instance.experienceForm.status == 'INVALID') {
+          workExp.instance.experienceForm.value.experienceType = 'Profissional';
+          workExp.instance.experienceForm.value.userId = user.userId;
+          delete workExp.instance.experienceForm.value.experienceId;
+          this.usersService
+            .createExperience(workExp.instance.experienceForm.value)
+            .subscribe({
+              error: (err) =>
+                console.log(
+                  'Erro ao criar nova experiencia profissional do usuário: ',
+                  err
+                ),
+            });
+        }
+        else {
+          this.usersService
+            .updateExperiencesByUserId(workExp.instance.experienceForm.value)
+            .subscribe({
+              error: (err) =>
+                console.log(
+                  'Erro ao atualizar experiência profissional do usuário: ',
+                  err
+                ),
+            });
+        }
       });
     }
 
