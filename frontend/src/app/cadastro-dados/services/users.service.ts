@@ -25,7 +25,7 @@ export class UsersService {
   }
 
   public deleteUser(id: string): Observable<any> {
-    return this.http.delete<any>(`https://localhost:7241/Users/${id}`);
+    return this.http.delete<any>(`https://localhost:7241/User/${id}`);
   }
 
   public getStatesOfBrazil(): State[] {

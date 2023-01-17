@@ -32,7 +32,7 @@ export class TokenInterceptor implements HttpInterceptor {
       headers: new HttpHeaders({
         'Authorization': `Bearer ${token}`,
         'Content-Type': 'application/json',
-        'Accept': 'application/json, */*',
+        'Accept': 'application/json',
         'Access-Control-Allow-Headers': 'Content-Type',
       }),
     });

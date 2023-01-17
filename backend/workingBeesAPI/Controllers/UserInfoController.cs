@@ -92,7 +92,7 @@ namespace WorkingBeesAPI.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [Authorize(Roles = "Admin")]
-        [Authorize(Roles = "Usuário")]
+        //[Authorize(Roles = "Usuário")]
         public async Task<IActionResult> UpdateUser(long id, UserInfoDto userInfoDto)
         {
             UserInfo userMapped = _mapper.Map<UserInfo>(userInfoDto);
@@ -105,8 +105,8 @@ namespace WorkingBeesAPI.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [Authorize(Roles = "Admin")]
-        [Authorize(Roles = "Usuário")]
+        [Authorize(Roles = "Admin, Usuário")]
+        //[Authorize(Roles = "Usuário")]
         public async Task<IActionResult> DeleteUser(long id)
         {
             if (!await _userService.DeleteAsync(id))

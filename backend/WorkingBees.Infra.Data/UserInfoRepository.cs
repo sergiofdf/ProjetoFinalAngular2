@@ -53,7 +53,7 @@ namespace WorkingBees.Infra.Data
         }
         public async Task<bool> InsertAsync(UserInfo user)
         {
-            var query = "INSERT INTO UserInfo VALUES (@name, @phoneNumber, @email, @city, @state, @profileImageUrl, @userRole);";
+            var query = "INSERT INTO UserInfo VALUES (@name, @phoneNumber, @email, @city, @state, @profileImageUrl, @userRole, @password);";
 
             var parameters = new DynamicParameters(user);
 
