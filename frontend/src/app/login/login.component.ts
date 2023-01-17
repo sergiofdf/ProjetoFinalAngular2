@@ -12,12 +12,6 @@ import { LoginService } from './services/login.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
-  // public get usersService(): UsersService {
-  //   return this._usersService;
-  // }
-  // public set usersService(value: UsersService) {
-  //   this._usersService = value;
-  // }
 
   public loginForm!: FormGroup;
   public userId!: number;
@@ -67,20 +61,25 @@ export class LoginComponent {
 
     if (this.userId) {
       this.loginService.getToken(this.userId)
-        .subscribe(
-          (responseData) => {
+        .subscribe({
+          next: (responseData) => {
             this.userId = 0;
             this.loginForm.reset();
             localStorage.setItem('BEARER', responseData);
             this.router.navigate(['/cadastro-dados']);
           },
-          (error) => {
+          error: (error) => {
             console.log(error);
           }
+        }
         );
     } else {
       this.errorMessage = true;
     }
+  }
+
+  public onCreateClick(): void{
+    this.router.navigate(['/cadastro-dados/create'])
   }
 }
 
