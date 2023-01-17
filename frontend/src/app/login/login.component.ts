@@ -48,9 +48,7 @@ export class LoginComponent {
   public onSubmit(): void {
 
     const userPassword = this.loginForm.getRawValue();
-    console.log(userPassword);
     this.users.map(user => {
-      console.log(user);
       if (userPassword.email === user.email && userPassword.password === user.password) {
         this.userId = Number(user.userId);
         localStorage.setItem('USER', user.email);

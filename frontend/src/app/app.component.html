@@ -1,1 +1,25 @@
+<mat-toolbar color="primary" class="d-flex justify-content-between">
+  <button
+    mat-button
+    routerLink="/"
+    >CRUD</button>
+  <div class="menu">
+    <button
+      mat-button
+      routerLink="/cadastro-dados/create"
+      >Cadastro</button>
+    <button
+      mat-button
+      routerLink="/cadastro-dados"
+      >Lista Usuários</button>
+    <button
+      mat-button
+      (click)="logout()"
+      >
+      Sair
+      <mat-icon>logout</mat-icon>
+    </button>
+  </div>
+</mat-toolbar>
+
 <router-outlet></router-outlet>
