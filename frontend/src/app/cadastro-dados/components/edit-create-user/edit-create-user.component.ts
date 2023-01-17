@@ -4,6 +4,7 @@ import { Component, ComponentRef, OnInit, ViewChild, ViewContainerRef } from '@a
 import { FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UsersService } from '../../services/users.service';
+import { User } from '../../models/user.model';
 
 @Component({
   selector: 'app-edit-create-user',
@@ -129,5 +130,14 @@ export class EditCreateUserComponent implements OnInit  {
   }
 
   private updateForm(): void {}
+
+  public submitForm(event: any): void{
+    const user = event.getRawValue();
+    user.userRole = 'Usuário';
+    delete user.userId;
+    this.usersService.createUser(user).subscribe({
+      error: (err) => console.log('Erro ao cadastrar usuário: ', err)
+    })
+  }
 
 }
