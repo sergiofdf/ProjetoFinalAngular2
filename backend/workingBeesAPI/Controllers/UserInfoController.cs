@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using WorkingBees.Core.Interfaces;
 using WorkingBees.Core.Models;
+using WorkingBees.Core.Models.Dtos;
 
 namespace WorkingBeesAPI.Controllers
 {
@@ -25,8 +26,24 @@ namespace WorkingBeesAPI.Controllers
             _userCompleteInfoService = userCompleteInfoService;
             _mapper = mapper;
         }
-
         [HttpGet("/Users")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [AllowAnonymous]
+        public async Task<ActionResult<List<UserInfoGetDto>>> ListAllUsersUnlogged()
+        {
+            List<UserInfo> users = await _userService.ListAllAsync();
+            List<UserInfoGetDto> usersMapped = new List<UserInfoGetDto>();
+
+            users.ForEach(user =>
+            {
+                UserInfoGetDto userMapped = _mapper.Map<UserInfoGetDto>(user);
+                usersMapped.Add(userMapped);
+            });
+
+            return Ok(usersMapped);
+        }
+
+        [HttpGet("/Users-full")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [AllowAnonymous]
         public async Task<ActionResult<List<UserInfo>>> ListAllUsers()
@@ -61,7 +78,7 @@ namespace WorkingBeesAPI.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status409Conflict)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [Authorize(Roles = "Admin")]
+        [AllowAnonymous]
         public async Task<ActionResult<bool>> InsertUser(UserInfoDto userDto)
         {
             UserInfo userMapped = _mapper.Map<UserInfo>(userDto);
@@ -75,6 +92,7 @@ namespace WorkingBeesAPI.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Usuário")]
         public async Task<IActionResult> UpdateUser(long id, UserInfoDto userInfoDto)
         {
             UserInfo userMapped = _mapper.Map<UserInfo>(userInfoDto);
@@ -88,6 +106,7 @@ namespace WorkingBeesAPI.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Usuário")]
         public async Task<IActionResult> DeleteUser(long id)
         {
             if (!await _userService.DeleteAsync(id))

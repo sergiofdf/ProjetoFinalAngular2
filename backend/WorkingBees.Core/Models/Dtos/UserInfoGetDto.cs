@@ -1,8 +1,13 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace WorkingBees.Core.Models
+namespace WorkingBees.Core.Models.Dtos
 {
-    public class UserInfo
+    public class UserInfoGetDto
     {
         [Key]
         public long UserId { get; set; }
@@ -20,7 +25,5 @@ namespace WorkingBees.Core.Models
         public string? ProfileImageUrl { get; set; }
         [Required(ErrorMessage = "Nível de permissão obrigatória.")]
         public string? UserRole { get; set; }
-        [Required(ErrorMessage = "Senha obrigatória.")]
-        public string? Password { get; set; }
     }
 }

@@ -50,6 +50,7 @@ namespace WorkingBeesAPI.Controllers
         [ProducesResponseType(StatusCodes.Status409Conflict)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Usuário")]
         public async Task<ActionResult<bool>> InsertExperience(ExperienceDto experienceDto)
         {
             Experience experienceMapped = _mapper.Map<Experience>(experienceDto);
@@ -63,6 +64,7 @@ namespace WorkingBeesAPI.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Usuário")]
         public async Task<IActionResult> UpdateExperience(long id, ExperienceDto experienceDto)
         {
             Experience experienceMapped = _mapper.Map<Experience>(experienceDto);
@@ -76,6 +78,7 @@ namespace WorkingBeesAPI.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Usuário")]
         public async Task<IActionResult> DeleteExperience(long id)
         {
             if (!await _experienceService.DeleteAsync(id))

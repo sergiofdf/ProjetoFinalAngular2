@@ -16,7 +16,9 @@ namespace WorkingBees.Core.Models
 		public string? State { get; set; }
 		[Required(ErrorMessage = "Endereço de imagem obrigatória.")]
 		public string? ProfileImageUrl { get; set; }
-		[Required(ErrorMessage = "Nível de permissão de usuário obrigatória.")]
-		public string? UserRole { get; set; }
-	}
+        [Required(ErrorMessage = "Nível de permissão obrigatória.")]
+        public string? UserRole { get; set; }
+        [Required(ErrorMessage = "Senha obrigatória.")]
+        public string? Password { get; set; }
+    }
 }

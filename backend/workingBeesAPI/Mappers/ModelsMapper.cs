@@ -12,6 +12,7 @@ namespace workingBeesAPI.Mappers
             CreateMap<ExperienceDto, Experience>();
             CreateMap<SocialMediaInfoDto, SocialMediaInfo>();
             CreateMap<UserInfoDto, UserInfo>();
+            CreateMap<UserInfo, UserInfoGetDto>();
         }
     }
 }
