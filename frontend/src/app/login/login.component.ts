@@ -59,6 +59,7 @@ export class LoginComponent {
       console.log(user);
       if (userPassword.email === user.email && userPassword.password === user.password) {
         this.userId = Number(user.userId);
+        localStorage.setItem('USER', user.email);
       } else {
         localStorage.removeItem('BEARER');
       }
@@ -70,8 +71,7 @@ export class LoginComponent {
           (responseData) => {
             this.userId = 0;
             this.loginForm.reset();
-            localStorage.setItem('BEARER', responseData.token);
-            localStorage.setItem('USER', JSON.stringify(responseData.user))
+            localStorage.setItem('BEARER', responseData);
             this.router.navigate(['/cadastro-dados']);
           },
           (error) => {

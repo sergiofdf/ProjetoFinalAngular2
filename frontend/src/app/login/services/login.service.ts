@@ -1,7 +1,7 @@
+import { LoginResponse } from './../models/login-response.model';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { LoginResponse } from '../models/login-response.model';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +11,7 @@ export class LoginService {
   constructor(private http: HttpClient) { }
 
 
-  public getToken(id: number): Observable<LoginResponse> {
+  public getToken(id: number): Observable<string> {
     const headers = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -21,6 +21,6 @@ export class LoginService {
       params: new HttpParams().set("id", id)
     };
 
-    return this.http.get<LoginResponse>(`https://localhost:7241/Token/${id}`, headers);
+    return this.http.get<string>(`https://localhost:7241/Token/${id}`, headers)
   }
 }
