@@ -32,7 +32,7 @@ export class LoginComponent {
   ) { }
 
   ngOnInit() {
-    this.getUsers();
+    this.getUsersFull();
     this.buildForm();
   }
 
@@ -44,8 +44,8 @@ export class LoginComponent {
     })
   }
 
-  public getUsers(): void {
-    this.usersService.getUsers().subscribe({
+  public getUsersFull(): void {
+    this.usersService.getUsersFull().subscribe({
       next: (res) => this.users = res,
       error: (err) => console.log('Erro na listagem de usuários: ', err),
     })
@@ -57,10 +57,10 @@ export class LoginComponent {
     console.log(userPassword);
     this.users.map(user => {
       console.log(user);
-      if (userPassword.email === user.email /*&& userPassword.password === user.password*/) {
+      if (userPassword.email === user.email && userPassword.password === user.password) {
         this.userId = Number(user.userId);
       } else {
-        localStorage.removeItem('bearer');
+        localStorage.removeItem('BEARER');
       }
     })
 
@@ -70,7 +70,8 @@ export class LoginComponent {
           (responseData) => {
             this.userId = 0;
             this.loginForm.reset();
-            localStorage.setItem('bearer', responseData);
+            localStorage.setItem('BEARER', responseData.token);
+            localStorage.setItem('USER', JSON.stringify(responseData.user))
             this.router.navigate(['/cadastro-dados']);
           },
           (error) => {
