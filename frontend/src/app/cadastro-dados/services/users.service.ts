@@ -16,6 +16,10 @@ export class UsersService {
     return this.http.get<User[]>('https://localhost:7241/Users');
   }
 
+  public createUser(user: any): Observable<any>{
+    return this.http.post<any>('https://localhost:7241/Users', user);
+  }
+
   public deleteUser(id: string): Observable<any> {
     return this.http.delete<any>(`https://localhost:7241/Users/${id}`);
   }
