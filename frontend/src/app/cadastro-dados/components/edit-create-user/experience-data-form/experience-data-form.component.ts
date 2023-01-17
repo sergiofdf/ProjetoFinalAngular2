@@ -50,10 +50,6 @@ export class ExperienceDataFormComponent implements OnInit {
     this.buildExperienceForm(this.experienceData);
   }
 
-  // ngOnChanges(): void{
-  //   this.buildExperienceForm(this.experienceData)
-  // }
-
   public buildExperienceForm(experience?: Experience): void {
     this.experienceForm = new FormGroup({
       userId: new FormControl(experience?.userId),

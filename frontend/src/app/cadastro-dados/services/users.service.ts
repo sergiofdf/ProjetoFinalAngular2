@@ -43,8 +43,37 @@ export class UsersService {
     return this.http.post<any>('https://localhost:7241/User', user);
   }
 
+  public updateUserById(user: User): Observable<any>{
+    return this.http.put<any>(`https://localhost:7241/User/${user.userId}`, user);
+  }
+
+  public updateExperiencesByUserId(experience: Experience): Observable<any>{
+    // const experienceBody: any = experience;
+    // delete experienceBody.experienceId
+    // console.log(experienceBody);
+
+    return this.http.put<any>(`https://localhost:7241/experience/${experience.experienceId}`, experience);
+  }
+
+  public updateSkillsByUserId(skill: Skill): Observable<any>{
+    return this.http.put<any>(`https://localhost:7241/Skill/${skill.skillId}`, skill);
+  }
+
+  public updateSocialMediaByUserId(socialMedia: SocialMedia): Observable<any>{
+    console.log()
+    return this.http.put<any>(`https://localhost:7241/socialmediainfos/${socialMedia.socialMediaInfoId}`, socialMedia);
+  }
+
   public deleteUser(id: string): Observable<any> {
     return this.http.delete<any>(`https://localhost:7241/User/${id}`);
+  }
+
+  public deleteExperience(id: string): Observable<any> {
+    return this.http.delete<any>(`https://localhost:7241/experience/${id}`);
+  }
+
+  public deleteSkill(id: string): Observable<any> {
+    return this.http.delete<any>(`https://localhost:7241/Skill/${id}`);
   }
 
   public getStatesOfBrazil(): State[] {
