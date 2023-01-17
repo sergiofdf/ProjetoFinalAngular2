@@ -49,8 +49,7 @@ namespace WorkingBeesAPI.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status409Conflict)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [Authorize(Roles = "Admin")]
-        [Authorize(Roles = "Usuário")]
+        [Authorize(Roles = "Admin, Usuário")]
         public async Task<ActionResult<bool>> InsertExperience(SocialMediaInfoDto socialMediaInfoDto)
         {
             SocialMediaInfo socialMediaInfoMapped = _mapper.Map<SocialMediaInfo>(socialMediaInfoDto);
@@ -63,8 +62,7 @@ namespace WorkingBeesAPI.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [Authorize(Roles = "Admin")]
-        [Authorize(Roles = "Usuário")]
+        [Authorize(Roles = "Admin, Usuário")]
         public async Task<IActionResult> UpdateExperience(long id, SocialMediaInfoDto socialMediaInfoDto)
         {
             SocialMediaInfo socialMediaInfoMapped = _mapper.Map<SocialMediaInfo>(socialMediaInfoDto);
@@ -77,8 +75,7 @@ namespace WorkingBeesAPI.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [Authorize(Roles = "Admin")]
-        [Authorize(Roles = "Usuário")]
+        [Authorize(Roles = "Admin, Usuário")]
         public async Task<IActionResult> DeleteExperience(long id)
         {
             if (!await _socialMediaInfoService.DeleteAsync(id))

@@ -48,8 +48,7 @@ namespace workingBeesAPI.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status409Conflict)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [Authorize(Roles = "Admin")]
-        [Authorize(Roles = "Usuário")]
+        [Authorize(Roles = "Admin, Usuário")]
         public async Task<ActionResult<bool>> InsertSkill(SkillDto skillDto)
         {
             Skill skillMapped = _mapper.Map<Skill>(skillDto);
@@ -62,8 +61,7 @@ namespace workingBeesAPI.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [Authorize(Roles = "Admin")]
-        [Authorize(Roles = "Usuário")]
+        [Authorize(Roles = "Admin, Usuário")]
         public async Task<IActionResult> UpdateSkill(long id, SkillDto skillDto)
         {
             Skill skillMapped = _mapper.Map<Skill>(skillDto);
@@ -76,8 +74,7 @@ namespace workingBeesAPI.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [Authorize(Roles = "Admin")]
-        [Authorize(Roles = "Usuário")]
+        [Authorize(Roles = "Admin, Usuário")]
         public async Task<IActionResult> DeleteSkill(long id)
         {
             if (!await _skillService.DeleteAsync(id))

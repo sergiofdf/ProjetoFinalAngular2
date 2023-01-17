@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using WorkingBees.Core.Interfaces;
 using WorkingBees.Core.Models;
@@ -6,6 +8,8 @@ namespace workingBeesAPI.Controllers
 {
 	[ApiController]
 	[Route("[controller]")]
+	[EnableCors("PolicyCors")]
+	[AllowAnonymous]
 	public class TokenController : ControllerBase
 	{
 		private readonly IService<UserInfo> _userService;
