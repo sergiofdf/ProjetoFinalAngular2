@@ -40,7 +40,7 @@ import { UsersService } from 'src/app/cadastro-dados/services/users.service';
 export class ExperienceDataFormComponent implements OnInit {
   public experienceForm!: FormGroup;
   @Input() experienceType: string = 'Experiência Profissional';
-  @Input() workExpId!: number;
+  @Input() expId!: number;
   @Input() parentRef!: EditCreateUserComponent;
 
   constructor() {}
@@ -61,7 +61,13 @@ export class ExperienceDataFormComponent implements OnInit {
     });
   }
 
-  removeMe() {
-    this.parentRef.removeWorkExperienceForm(this.workExpId);
+  public removeMe(): void {
+    if(this.experienceType === 'Experiência Profissional'){
+      this.parentRef.removeWorkExperienceForm(this.expId);
+    }
+    else{
+      this.parentRef.removeEducationExperienceForm(this.expId);
+    }
+
   }
 }
