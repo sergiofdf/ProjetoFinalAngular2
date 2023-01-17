@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Role } from 'src/app/cadastro-dados/models/role.model';
 import { State } from 'src/app/cadastro-dados/models/state.model';
@@ -14,7 +14,6 @@ export class UserDataFormComponent implements OnInit {
   public states!: State[];
   public roles!: Role[];
   public userForm!: FormGroup;
-  @Output()  formEmitter: EventEmitter<FormGroup> = new EventEmitter();
 
   constructor(
     private usersService: UsersService

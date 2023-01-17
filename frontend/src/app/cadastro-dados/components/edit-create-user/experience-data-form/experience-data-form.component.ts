@@ -41,22 +41,28 @@ export class ExperienceDataFormComponent implements OnInit {
   @Input() experienceType: string = 'Experiência Profissional';
   @Input() expId!: number;
   @Input() parentRef!: EditCreateUserComponent;
+  @Input() expFormTitle!: string;
+  @Input() experienceData!: Experience;
 
   constructor() {}
 
   ngOnInit(): void {
-    this.buildExperienceForm();
+    this.buildExperienceForm(this.experienceData);
   }
 
-  public buildExperienceForm(): void {
+  // ngOnChanges(): void{
+  //   this.buildExperienceForm(this.experienceData)
+  // }
+
+  public buildExperienceForm(experience?: Experience): void {
     this.experienceForm = new FormGroup({
-      userId: new FormControl(null),
-      experienceId: new FormControl(null, [Validators.required]),
-      experienceType: new FormControl(null, [Validators.required]),
-      title: new FormControl(null, [Validators.required]),
-      initialDate: new FormControl(null, [Validators.required]),
-      finalDate: new FormControl(null, [Validators.required]),
-      expDescription: new FormControl(null, [Validators.required]),
+      userId: new FormControl(experience?.userId),
+      experienceId: new FormControl(experience?.experienceId, [Validators.required]),
+      experienceType: new FormControl(experience?.experienceType, [Validators.required]),
+      title: new FormControl(experience?.title, [Validators.required]),
+      initialDate: new FormControl(experience?.initialDate, [Validators.required]),
+      finalDate: new FormControl(experience?.finalDate, [Validators.required]),
+      expDescription: new FormControl(experience?.expDescription, [Validators.required]),
     });
   }
 

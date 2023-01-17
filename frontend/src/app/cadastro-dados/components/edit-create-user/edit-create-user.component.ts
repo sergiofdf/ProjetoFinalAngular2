@@ -6,6 +6,8 @@ import { FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UsersService } from '../../services/users.service';
 import { User } from '../../models/user.model';
+import { Skill } from '../../models/skill.model';
+import { SocialMedia } from '../../models/social-media.model';
 
 @Component({
   selector: 'app-edit-create-user',
@@ -27,6 +29,9 @@ export class EditCreateUserComponent implements OnInit  {
 
   @ViewChild('dadosPessoais') dadosPessoais!: any;
   @ViewChild('expProfissional') expProfissional!: any;
+  @ViewChild('expEducation') expEducation!: any;
+  @ViewChild('skillFirstForm') skillFirstForm!: any;
+  @ViewChild('socialMediaData') socialMediaData!: any;
 
   expId: number = 0;
   workExpReferences = Array<ComponentRef<ExperienceDataFormComponent>>();
@@ -54,17 +59,10 @@ export class EditCreateUserComponent implements OnInit  {
   public addWorkExperienceForm(experience?: Experience): void{
     const expComponentRef = this.container.createComponent(ExperienceDataFormComponent);
 
-    const expComponent = expComponentRef.instance;
-    expComponent.expId = this.expId++;
-    expComponent.parentRef = this;
-    expComponent.experienceType = 'Experiência Profissional';
-    if(experience){
-      expComponent.ngOnInit();
-      expComponent.experienceForm.reset();
-      expComponent.experienceForm.patchValue(experience);
-      expComponent.experienceForm.updateValueAndValidity();
-    }
-    console.log(expComponent.experienceForm.value)
+    expComponentRef.setInput('expId', ++this.expId);
+    expComponentRef.setInput('parentRef', this);
+    expComponentRef.setInput('experienceType', 'Experiência Profissional');
+    expComponentRef.setInput('experienceData', experience);
     this.workExpReferences.push(expComponentRef);
   }
 
@@ -85,13 +83,13 @@ export class EditCreateUserComponent implements OnInit  {
       x => x.instance.expId !== id);
   }
 
-  public addEducationExperienceForm(): void{
+  public addEducationExperienceForm(experience?: Experience): void{
     const educationExpComponentRef = this.educationContainer.createComponent(ExperienceDataFormComponent);
 
-    const educationExpComponent = educationExpComponentRef.instance;
-    educationExpComponent.expId = this.expId++;
-    educationExpComponent.parentRef = this;
-    educationExpComponent.experienceType = 'Experiência Acadêmica';
+    educationExpComponentRef.setInput('expId', ++this.expId);
+    educationExpComponentRef.setInput('parentRef', this);
+    educationExpComponentRef.setInput('experienceType', 'Experiência Acadêmica');
+    educationExpComponentRef.setInput('experienceData', experience);
 
     this.educationExpReferences.push(educationExpComponentRef);
   }
@@ -113,12 +111,11 @@ export class EditCreateUserComponent implements OnInit  {
       x => x.instance.expId !== id);
   }
 
-  public addSkillForm(): void{
+  public addSkillForm(skill?: Skill): void{
     const skillComponentRef = this.skillsContainer.createComponent(SkillDataFormComponent);
-
-    const skillComponent = skillComponentRef.instance;
-    skillComponent.skillId = this.skillId++;
-    skillComponent.parentRef = this;
+    skillComponentRef.setInput('skillId', ++this.skillId);
+    skillComponentRef.setInput('parentRef', this);
+    skillComponentRef.setInput('skillData', skill);
 
     this.skillsReferences.push(skillComponentRef);
   }
@@ -153,14 +150,43 @@ export class EditCreateUserComponent implements OnInit  {
     this.usersService.getExperiencesByUserId(id).subscribe({
       next: (res) => {
         const experiences: Experience[] = res;
-        this.expProfissional.experienceForm.patchValue(experiences[0]);
-        if(experiences.length>1){
-          for( let i = 1; i < experiences.length; i++ ){
-            this.addWorkExperienceForm(experiences[i]);
-            // console.log(this.workExpReferences[(i-1)].instance);
-            // this.workExpReferences[(i-1)].instance.experienceForm.patchValue(experiences[i]);
+        const workExperiences = experiences.filter( exp => exp.experienceType === 'Profissional');
+        const educationExperiences = experiences.filter( exp => exp.experienceType === 'Acadêmica');
+        if(workExperiences.length > 0){
+          this.expProfissional.experienceForm.patchValue(workExperiences[0]);
+          for( let i = 1; i < workExperiences.length; i++ ){
+            this.addWorkExperienceForm(workExperiences[i]);
           }
         }
+        if(educationExperiences.length > 0){
+          this.expEducation.experienceForm.patchValue(educationExperiences[0]);
+          for( let i = 1; i < educationExperiences.length; i++ ){
+            this.addEducationExperienceForm(educationExperiences[i]);
+          }
+        }
+      },
+      error: (err) => {
+        console.log('Erro ao consultar experiências do usuário:', err);
+      }
+    });
+    this.usersService.getSkillsByUserId(id).subscribe({
+      next: (res) => {
+        const skills: Skill[] = res;
+        if(skills.length > 0){
+          this.skillFirstForm.skillForm.patchValue(skills[0]);
+          for( let i = 1; i < skills.length; i++ ){
+            this.addSkillForm(skills[i]);
+          }
+        }
+      },
+      error: (err) => {
+        console.log('Erro ao consultar experiências do usuário:', err);
+      }
+    });
+    this.usersService.getSocialMediaByUserId(id).subscribe({
+      next: (res) => {
+        const socialMedia: SocialMedia = res;
+        this.socialMediaData.socialMediaForm.patchValue(socialMedia);
       },
       error: (err) => {
         console.log('Erro ao consultar experiências do usuário:', err);

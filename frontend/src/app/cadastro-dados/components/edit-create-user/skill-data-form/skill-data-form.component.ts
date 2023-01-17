@@ -9,6 +9,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { NgxMaskDirective, NgxMaskPipe } from 'ngx-mask';
+import { Skill } from 'src/app/cadastro-dados/models/skill.model';
 import { EditCreateUserComponent } from '../edit-create-user.component';
 
 @Component({
@@ -34,21 +35,22 @@ export class SkillDataFormComponent implements OnInit {
   public skillForm!: FormGroup;
   @Input() skillId!: number;
   @Input() parentRef!: EditCreateUserComponent;
+  @Input() skillData!: Skill;
 
   constructor(
   ) { }
 
   ngOnInit(): void {
-    this.buildSkillForm();
+    this.buildSkillForm(this.skillData);
   }
 
-  private buildSkillForm(): void {
+  private buildSkillForm(skill?: Skill): void {
     this.skillForm = new FormGroup({
-      userId: new FormControl(),
-      skillId: new FormControl(null, [Validators.required]),
-      skillType: new FormControl(null, [Validators.required]),
-      title: new FormControl(null, [Validators.required]),
-      progressLevel: new FormControl(null, [Validators.required]),
+      userId: new FormControl(skill?.userId),
+      skillId: new FormControl(skill?.skillId, [Validators.required]),
+      skillType: new FormControl(skill?.skillType, [Validators.required]),
+      title: new FormControl(skill?.title, [Validators.required]),
+      progressLevel: new FormControl(skill?.progressLevel, [Validators.required]),
     });
   }
 

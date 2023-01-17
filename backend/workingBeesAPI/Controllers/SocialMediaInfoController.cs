@@ -37,11 +37,11 @@ namespace WorkingBeesAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [AllowAnonymous]
-        public async Task<ActionResult<List<SocialMediaInfo>>> ListSocialMediaInfosByUserId(long userId)
+        public async Task<ActionResult<SocialMediaInfo>> ListSocialMediaInfosByUserId(long userId)
         {
-            var socialmediainfosList = await _socialMediaInfoService.ListallbyuseridAsync(userId);
-            if (socialmediainfosList == null) return NotFound();
-            return Ok(socialmediainfosList);
+            var socialmediainfo = (await _socialMediaInfoService.ListallbyuseridAsync(userId)).FirstOrDefault();
+            if (socialmediainfo == null) return NotFound();
+            return Ok(socialmediainfo);
         }
 
         [HttpPost("/socialmediainfos")]
