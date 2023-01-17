@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
 import { MatIconModule } from '@angular/material/icon';
-import {  MatButtonModule } from '@angular/material/button';
+import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatSelectModule } from '@angular/material/select';
@@ -17,6 +17,8 @@ import { UserDataFormComponent } from './components/edit-create-user/user-data-f
 import { ExperienceDataFormComponent } from './components/edit-create-user/experience-data-form/experience-data-form.component';
 import { SkillDataFormComponent } from './components/edit-create-user/skill-data-form/skill-data-form.component';
 import { SocialMediaFormComponent } from './components/edit-create-user/social-media-form/social-media-form.component';
+import { DialogComponent } from './components/dialog/dialog.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 const material = [
   MatIconModule,
@@ -25,7 +27,8 @@ const material = [
   MatDividerModule,
   MatFormFieldModule,
   MatSelectModule,
-  MatInputModule
+  MatInputModule,
+  MatDialogModule
 ];
 
 @NgModule({
@@ -34,7 +37,8 @@ const material = [
     UserListComponent,
     EditCreateUserComponent,
     UserDataFormComponent,
-    SocialMediaFormComponent
+    SocialMediaFormComponent,
+    DialogComponent
   ],
   imports: [
     CommonModule,
