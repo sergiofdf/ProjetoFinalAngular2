@@ -5,6 +5,7 @@ export interface User {
   email: string;
   city: string;
   state: string;
-  profileImageUrl: string
-  userRole: string
+  profileImageUrl: string;
+  userRole: string;
+  password: string;
 }

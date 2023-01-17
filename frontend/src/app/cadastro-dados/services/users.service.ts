@@ -12,6 +12,10 @@ export class UsersService {
 
   constructor(private http: HttpClient) { }
 
+  public getUsersFull(): Observable<User[]> {
+    return this.http.get<User[]>('https://localhost:7241/Users-full');
+  }
+
   public getUsers(): Observable<User[]> {
     return this.http.get<User[]>('https://localhost:7241/Users');
   }
