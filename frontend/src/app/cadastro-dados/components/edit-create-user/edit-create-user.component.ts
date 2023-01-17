@@ -24,6 +24,8 @@ export class EditCreateUserComponent implements OnInit  {
 
   @ViewChild('skillsContainer', {read: ViewContainerRef}) skillsContainer!: ViewContainerRef;
 
+  @ViewChild('dadosPessoais') dadosPessoais!: ViewContainerRef;
+
   expId: number = 0;
   workExpReferences = Array<ComponentRef<ExperienceDataFormComponent>>();
   educationExpReferences = Array<ComponentRef<ExperienceDataFormComponent>>();
@@ -136,6 +138,11 @@ export class EditCreateUserComponent implements OnInit  {
     user.userRole = 'Usuário';
     delete user.userId;
     this.usersService.createUser(user).subscribe({
+      next: (res) => {
+        //console.log(this.dadosPessoais.get);
+
+        this.router.navigate(['/cadastro-dados'])
+      },
       error: (err) => console.log('Erro ao cadastrar usuário: ', err)
     })
   }

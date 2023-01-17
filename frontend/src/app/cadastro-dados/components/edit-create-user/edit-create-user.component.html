@@ -1,5 +1,5 @@
 <div class="container mt-4">
-  <app-user-data-form (formEmitter)="submitForm($event)"></app-user-data-form>
+  <app-user-data-form (formEmitter)="submitForm($event)" #dadosPessoais></app-user-data-form>
 
   <app-experience-data-form [experienceType]="'Experiência Profissional'" *ngIf="isUpdate"></app-experience-data-form>
   <ng-container #container></ng-container>

@@ -21,7 +21,7 @@ export class UsersService {
   }
 
   public createUser(user: any): Observable<any>{
-    return this.http.post<any>('https://localhost:7241/Users', user);
+    return this.http.post<any>('https://localhost:7241/User', user);
   }
 
   public deleteUser(id: string): Observable<any> {
