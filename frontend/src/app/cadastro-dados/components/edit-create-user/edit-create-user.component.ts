@@ -1,3 +1,4 @@
+import { Experience } from '../../models/experience.model';
 import { SkillDataFormComponent } from './skill-data-form/skill-data-form.component';
 import { ExperienceDataFormComponent } from './experience-data-form/experience-data-form.component';
 import { Component, ComponentRef, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
@@ -24,7 +25,8 @@ export class EditCreateUserComponent implements OnInit  {
 
   @ViewChild('skillsContainer', {read: ViewContainerRef}) skillsContainer!: ViewContainerRef;
 
-  @ViewChild('dadosPessoais') dadosPessoais!: ViewContainerRef;
+  @ViewChild('dadosPessoais') dadosPessoais!: any;
+  @ViewChild('expProfissional') expProfissional!: any;
 
   expId: number = 0;
   workExpReferences = Array<ComponentRef<ExperienceDataFormComponent>>();
@@ -45,17 +47,24 @@ export class EditCreateUserComponent implements OnInit  {
     this.userId = this.route.snapshot.params['id'];
     if (this.userId) {
       this.isUpdate = true;
-      this.updateForm();
+      this.updateForm(this.userId);
     }
   }
 
-  public addWorkExperienceForm(): void{
+  public addWorkExperienceForm(experience?: Experience): void{
     const expComponentRef = this.container.createComponent(ExperienceDataFormComponent);
 
     const expComponent = expComponentRef.instance;
     expComponent.expId = this.expId++;
     expComponent.parentRef = this;
-
+    expComponent.experienceType = 'Experiência Profissional';
+    if(experience){
+      expComponent.ngOnInit();
+      expComponent.experienceForm.reset();
+      expComponent.experienceForm.patchValue(experience);
+      expComponent.experienceForm.updateValueAndValidity();
+    }
+    console.log(expComponent.experienceForm.value)
     this.workExpReferences.push(expComponentRef);
   }
 
@@ -131,16 +140,40 @@ export class EditCreateUserComponent implements OnInit  {
       x => x.instance.skillId !== id);
   }
 
-  private updateForm(): void {}
+  private updateForm(id: string): void {
+    this.usersService.getUserById(id).subscribe({
+      next: (res) => {
+        const user = res;
+        this.dadosPessoais.userForm.patchValue(user);
+      },
+      error: (err) => {
+        console.log(err);
+      }
+    });
+    this.usersService.getExperiencesByUserId(id).subscribe({
+      next: (res) => {
+        const experiences: Experience[] = res;
+        this.expProfissional.experienceForm.patchValue(experiences[0]);
+        if(experiences.length>1){
+          for( let i = 1; i < experiences.length; i++ ){
+            this.addWorkExperienceForm(experiences[i]);
+            // console.log(this.workExpReferences[(i-1)].instance);
+            // this.workExpReferences[(i-1)].instance.experienceForm.patchValue(experiences[i]);
+          }
+        }
+      },
+      error: (err) => {
+        console.log('Erro ao consultar experiências do usuário:', err);
+      }
+    });
+  }
 
-  public submitForm(event: any): void{
-    const user = event.getRawValue();
+  public onSubmit(): void{
+    const user = this.dadosPessoais.userForm.getRawValue();
     user.userRole = 'Usuário';
     delete user.userId;
     this.usersService.createUser(user).subscribe({
       next: (res) => {
-        //console.log(this.dadosPessoais.get);
-
         this.router.navigate(['/cadastro-dados'])
       },
       error: (err) => console.log('Erro ao cadastrar usuário: ', err)
