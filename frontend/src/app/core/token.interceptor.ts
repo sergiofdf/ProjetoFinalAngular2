@@ -18,7 +18,7 @@ export class TokenInterceptor implements HttpInterceptor {
     request: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    if (request.url.includes('/login') || request.url.includes('/cadastro-dados/create')) {
+    if (request.url.includes('/Token') || request.url.includes('/login') || request.url.includes('/cadastro-dados/create')) {
       return next.handle(request);
     }
 
