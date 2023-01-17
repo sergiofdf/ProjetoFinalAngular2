@@ -53,13 +53,13 @@
             <mat-error>Campo url inválido</mat-error>
           </mat-form-field>
         <mat-form-field appearance="outline" class="col-4">
-          <mat-label>Permissão de acesso</mat-label>
-          <mat-select formControlName="userRole">
-            <mat-option *ngFor="let role of roles" [value]="role.roleName">{{
-              role.roleName
-            }}</mat-option>
-          </mat-select>
-          <mat-error>Campo permissão inválido</mat-error>
+          <mat-label>Senha</mat-label>
+          <input
+              formControlName="password"
+              type="password"
+              matInput
+            />
+          <mat-error>Campo senha inválido</mat-error>
         </mat-form-field>
     </div>
     </fieldset>

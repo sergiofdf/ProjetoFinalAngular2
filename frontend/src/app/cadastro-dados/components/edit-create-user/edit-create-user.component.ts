@@ -15,13 +15,17 @@ export class EditCreateUserComponent implements OnInit  {
   public educationsExperienceForms!: FormGroup[];
   public socialMedia!: FormGroup;
   public userId!: string;
+  public isUpdate:boolean = false;
 
   @ViewChild('container', {read: ViewContainerRef}) container!: ViewContainerRef;
 
+  @ViewChild('educationContainer', {read: ViewContainerRef}) educationContainer!: ViewContainerRef;
+
   @ViewChild('skillsContainer', {read: ViewContainerRef}) skillsContainer!: ViewContainerRef;
 
-  workExpId: number = 0;
+  expId: number = 0;
   workExpReferences = Array<ComponentRef<ExperienceDataFormComponent>>();
+  educationExpReferences = Array<ComponentRef<ExperienceDataFormComponent>>();
   skillId:number = 0;
   skillsReferences = Array<ComponentRef<SkillDataFormComponent>>();
 
@@ -32,8 +36,12 @@ export class EditCreateUserComponent implements OnInit  {
   ) { }
 
   ngOnInit(): void {
+    if(this.router.url.includes('create')){
+      this.isUpdate = false;
+    }
     this.userId = this.route.snapshot.params['id'];
     if (this.userId) {
+      this.isUpdate = true;
       this.updateForm();
     }
   }
@@ -42,7 +50,7 @@ export class EditCreateUserComponent implements OnInit  {
     const expComponentRef = this.container.createComponent(ExperienceDataFormComponent);
 
     const expComponent = expComponentRef.instance;
-    expComponent.workExpId = this.workExpId++;
+    expComponent.expId = this.expId++;
     expComponent.parentRef = this;
 
     this.workExpReferences.push(expComponentRef);
@@ -52,7 +60,7 @@ export class EditCreateUserComponent implements OnInit  {
     if (this.container.length < 1) return;
 
     const componentRef = this.workExpReferences.filter(
-      x => x.instance.workExpId == id
+      x => x.instance.expId == id
     )[0];
 
     const containerIndex: number = this.container.indexOf(componentRef.changeDetectorRef as any);
@@ -62,7 +70,35 @@ export class EditCreateUserComponent implements OnInit  {
 
     // removing component from the list
     this.workExpReferences = this.workExpReferences.filter(
-      x => x.instance.workExpId !== id);
+      x => x.instance.expId !== id);
+  }
+
+  public addEducationExperienceForm(): void{
+    const educationExpComponentRef = this.educationContainer.createComponent(ExperienceDataFormComponent);
+
+    const educationExpComponent = educationExpComponentRef.instance;
+    educationExpComponent.expId = this.expId++;
+    educationExpComponent.parentRef = this;
+    educationExpComponent.experienceType = 'Experiência Acadêmica';
+
+    this.educationExpReferences.push(educationExpComponentRef);
+  }
+
+  public removeEducationExperienceForm(id: number): void{
+    if (this.educationContainer.length < 1) return;
+
+    const componentRef = this.educationExpReferences.filter(
+      x => x.instance.expId == id
+    )[0];
+
+    const educationContainerIndex: number = this.educationContainer.indexOf(componentRef.changeDetectorRef as any);
+
+    // removing component from container
+    this.educationContainer.remove(educationContainerIndex);
+
+    // removing component from the list
+    this.educationExpReferences = this.educationExpReferences.filter(
+      x => x.instance.expId !== id);
   }
 
   public addSkillForm(): void{
