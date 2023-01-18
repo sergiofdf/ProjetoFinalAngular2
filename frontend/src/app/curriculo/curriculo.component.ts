@@ -47,7 +47,7 @@ export class CurriculoComponent implements OnInit {
     private usersService: UsersService,
     private router: Router,
     private route: ActivatedRoute
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.getCurriculoData();
@@ -113,9 +113,11 @@ export class CurriculoComponent implements OnInit {
     this.experiencesContainers[1].title = 'Experiência Acadêmica';
 
     experiences.map((experience) => {
+      let initialDateParsed = this.parseDateFormat(experience.initialDate);
+      // let finalDateParsed = this.parseDateFormat(experience.finalDate);
       const experienceParsed: ExperienceCv = {
         titleElement: experience.title,
-        textDateElement: `${experience.initialDate} - ${experience.finalDate}`,
+        textDateElement: `${initialDateParsed} - ${experience.finalDate}`,
         paragElement: experience.expDescription,
       };
       if (experience.experienceType == 'Profissional') {
@@ -124,6 +126,23 @@ export class CurriculoComponent implements OnInit {
         this.experiencesContainers[1].experiences.push(experienceParsed);
       }
     });
+  }
+
+  parseDateFormat(date: string): any {
+    if (date.toUpperCase() != 'ATUAL') {
+      let i = 0;
+      let formatedDate = '';
+      while (date[i]) {
+        if (i == 2 || i == 4)
+          formatedDate += '/';
+        formatedDate += date[i];
+        i++;
+      }
+      return formatedDate;
+    }
+    else {
+      return date;
+    }
   }
 
   parseSocialMediaInfo(socialMediaInfos: SocialMedia): void {
