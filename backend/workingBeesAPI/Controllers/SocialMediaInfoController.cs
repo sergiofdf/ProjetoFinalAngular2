@@ -40,6 +40,7 @@ namespace WorkingBeesAPI.Controllers
         public async Task<ActionResult<SocialMediaInfo>> ListSocialMediaInfosByUserId(long userId)
         {
             var socialmediainfo = (await _socialMediaInfoService.ListallbyuseridAsync(userId)).FirstOrDefault();
+            if (socialmediainfo == null) return Ok(null);
             return Ok(socialmediainfo);
         }
 

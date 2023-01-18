@@ -440,13 +440,21 @@ export class EditCreateUserComponent implements OnInit {
       });
     }
 
+    let isUpdate = false;
+    this.usersService.getSocialMediaByUserId(this.userId).subscribe({
+      next: (res: SocialMedia) => {
+        if(res) {
+          let { socialMediaInfoId, userId, ...rest } = res
+          for (const [key, value] of Object.entries(rest)) {
+            if (value !== null) isUpdate = true;
+          }
+        }
+      },
+    })
+
     const socialMedia: SocialMedia =
       this.socialMediaData.socialMediaForm.getRawValue();
-    let isUpdate = false;
 
-    for (const [key, value] of Object.entries(socialMedia)) {
-      if (value !== null) isUpdate = true;
-    }
     if (isUpdate) {
       socialMedia.userId = user.userId;
       this.usersService.updateSocialMediaByUserId(socialMedia).subscribe({

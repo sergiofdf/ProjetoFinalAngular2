@@ -57,9 +57,7 @@ export class CurriculoComponent implements OnInit {
     this.userId = this.route.snapshot.params['id'];
     this.usersService.getUserCompleteById(this.userId).subscribe({
       next: (res: UserComplete) => {
-        // console.log(res);
         let { skills, experiences, socialMediaInfos, ...rest } = res;
-        // console.log(rest);
         this.parseContactInfo(rest);
         this.parseSkillInfo(skills);
         this.parseExperiencesInfo(experiences);
