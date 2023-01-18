@@ -4,7 +4,7 @@
       Não há usuários cadastrados ainda
     </p>
     <div class="col-4" *ngFor="let user of users">
-      <mat-card class="example-card">
+      <mat-card class="example-card my-3" style="height: 407px;">
         <mat-card-header>
           <mat-card-title>{{ user.name }}</mat-card-title>
           <mat-card-subtitle>
@@ -31,7 +31,7 @@
             <strong>Estado:</strong>
             {{ user.state }}
           </p>
-          <p style="overflow: hidden !important; text-overflow: ellipsis;">
+          <p style="overflow: hidden !important; text-overflow: ellipsis; height: 60px;">
             <strong>URL Imagem:</strong>
             {{ user.profileImageUrl }}
           </p>

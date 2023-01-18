@@ -254,10 +254,8 @@ export class EditCreateUserComponent implements OnInit {
     user.userRole = 'Usuário';
     delete user.userId;
     this.usersService.createUser(user).subscribe({
-      next: () => {
-        this.router.navigate(['/cadastro-dados']);
-      },
       error: (err) => console.log('Erro ao cadastrar usuário: ', err),
+      complete: ( ) => this.router.navigate(['/cadastro-dados'])
     });
   }
 

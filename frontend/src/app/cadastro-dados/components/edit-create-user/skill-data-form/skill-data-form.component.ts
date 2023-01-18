@@ -33,7 +33,7 @@ import { EditCreateUserComponent } from '../edit-create-user.component';
 })
 export class SkillDataFormComponent implements OnInit {
   public skillForm!: FormGroup;
-  public skillTypes = ['Idioma', 'Técnica'];
+  public skillTypes = ['Idiomas', 'Técnicas'];
   @Input() skillId!: number;
   @Input() parentRef!: EditCreateUserComponent;
   @Input() skillData!: Skill;
