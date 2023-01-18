@@ -52,7 +52,7 @@ export class EditCreateUserComponent implements OnInit {
     private usersService: UsersService,
     private router: Router,
     private route: ActivatedRoute
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     if (this.router.url.includes('create')) {
@@ -269,16 +269,35 @@ export class EditCreateUserComponent implements OnInit {
 
     const firstExpProfissional: Experience =
       this.expProfissional.experienceForm.getRawValue();
-    if (firstExpProfissional.experienceId > 0) {
-      this.usersService
-        .updateExperiencesByUserId(firstExpProfissional)
-        .subscribe({
-          error: (err) =>
-            console.log(
-              'Erro ao atualizar experiência profissional do usuário: ',
-              err
-            ),
-        });
+    if (firstExpProfissional.title) {
+      if (this.expProfissional.experienceForm.status == 'INVALID') {
+        this.expProfissional.experienceForm.value.experienceType =
+          'Profissional';
+        this.expProfissional.experienceForm.value.userId = user.userId;
+        delete this.expProfissional.experienceForm.experienceId;
+        this.usersService
+          .createExperience(this.expProfissional.experienceForm.value)
+          .subscribe({
+            error: (err) =>
+              console.log(
+                'Erro ao criar nova experiencia profissional do usuário: ',
+                err
+              ),
+          });
+      } else {
+        this.expProfissional.experienceForm.value.experienceType =
+          'Profissional';
+        this.expProfissional.experienceForm.value.userId = user.userId;
+        this.usersService
+          .updateExperiencesByUserId(this.expProfissional.experienceForm.value)
+          .subscribe({
+            error: (err) =>
+              console.log(
+                'Erro ao atualizar experiência profissional do usuário: ',
+                err
+              ),
+          });
+      }
     }
 
     if (this.workExpReferences.length > 0) {
@@ -296,8 +315,9 @@ export class EditCreateUserComponent implements OnInit {
                   err
                 ),
             });
-        }
-        else {
+        } else {
+          workExp.instance.experienceForm.value.experienceType = 'Profissional';
+          workExp.instance.experienceForm.value.userId = user.userId;
           this.usersService
             .updateExperiencesByUserId(workExp.instance.experienceForm.value)
             .subscribe({
@@ -313,20 +333,25 @@ export class EditCreateUserComponent implements OnInit {
 
     const firstExpEducation: Experience =
       this.expEducation.experienceForm.getRawValue();
-    if (firstExpEducation.experienceId > 0) {
-      this.usersService.updateExperiencesByUserId(firstExpEducation).subscribe({
-        error: (err) =>
-          console.log(
-            'Erro ao atualizar experiência acadêmica do usuário: ',
-            err
-          ),
-      });
-    }
-
-    if (this.educationExpReferences.length > 0) {
-      this.educationExpReferences.map((educationExp) => {
+    if (firstExpEducation.title) {
+      if (this.expEducation.experienceForm.status == 'INVALID') {
+        this.expEducation.experienceForm.value.experienceType = 'Acadêmica';
+        this.expEducation.experienceForm.value.userId = user.userId;
+        delete this.expEducation.experienceForm.value.experienceId;
         this.usersService
-          .updateExperiencesByUserId(educationExp.instance.experienceData)
+          .createExperience(this.expEducation.experienceForm.value)
+          .subscribe({
+            error: (err) =>
+              console.log(
+                'Erro ao criar nova experiência acadêmica do usuário: ',
+                err
+              ),
+          });
+      } else {
+        this.expEducation.experienceForm.value.experienceType = 'Acadêmica';
+        this.expEducation.experienceForm.value.userId = user.userId;
+        this.usersService
+          .updateExperiencesByUserId(this.expEducation.experienceForm.value)
           .subscribe({
             error: (err) =>
               console.log(
@@ -334,34 +359,110 @@ export class EditCreateUserComponent implements OnInit {
                 err
               ),
           });
+      }
+    }
+
+    if (this.educationExpReferences.length > 0) {
+      this.educationExpReferences.map((educationExp) => {
+        if (educationExp.instance.experienceForm.status == 'INVALID') {
+          educationExp.instance.experienceForm.value.experienceType =
+            'Acadêmica';
+          educationExp.instance.experienceForm.value.userId = user.userId;
+          delete educationExp.instance.experienceForm.value.experienceId;
+          this.usersService
+            .createExperience(educationExp.instance.experienceForm.value)
+            .subscribe({
+              error: (err) =>
+                console.log(
+                  'Erro ao criar nova experiencia acadêmica do usuário: ',
+                  err
+                ),
+            });
+        } else {
+          educationExp.instance.experienceForm.value.experienceType =
+            'Acadêmica';
+          educationExp.instance.experienceForm.value.userId = user.userId;
+          this.usersService
+            .updateExperiencesByUserId(
+              educationExp.instance.experienceForm.value
+            )
+            .subscribe({
+              error: (err) =>
+                console.log(
+                  'Erro ao atualizar experiência acadêmica do usuário: ',
+                  err
+                ),
+            });
+        }
       });
     }
 
     const firstSkill: Skill = this.skillFirstForm.skillForm.getRawValue();
-    if (firstSkill.skillId > 0) {
-      this.usersService.updateSkillsByUserId(firstSkill).subscribe({
-        error: (err) =>
-          console.log('Erro ao atualizar competência do usuário: ', err),
-      });
-    }
-
-    if (this.skillsReferences.length > 0) {
-      this.skillsReferences.map((skillRef) => {
+    if (firstSkill.title) {
+      if (this.skillFirstForm.skillForm.status == 'INVALID') {
+        this.skillFirstForm.skillForm.value.userId = user.userId;
+        delete this.skillFirstForm.skillForm.value.skillId;
         this.usersService
-          .updateSkillsByUserId(skillRef.instance.skillData)
+          .createSkill(this.skillFirstForm.skillForm.value)
+          .subscribe({
+            error: (err) =>
+              console.log('Erro ao criar nova competência do usuário: ', err),
+          });
+      } else {
+        this.skillFirstForm.skillForm.value.userId = user.userId;
+        this.usersService
+          .updateSkillsByUserId(this.skillFirstForm.skillForm.value)
           .subscribe({
             error: (err) =>
               console.log('Erro ao atualizar competência do usuário: ', err),
           });
+      }
+    }
+
+    if (this.skillsReferences.length > 0) {
+      this.skillsReferences.map((skillRef) => {
+        if (skillRef.instance.skillForm.status == 'INVALID') {
+          skillRef.instance.skillForm.value.userId = user.userId;
+          delete skillRef.instance.skillForm.value.skillId;
+          this.usersService
+            .createSkill(skillRef.instance.skillForm.value)
+            .subscribe({
+              error: (err) =>
+                console.log('Erro ao criar nova competência do usuário: ', err),
+            });
+        } else {
+          skillRef.instance.skillForm.value.userId = user.userId;
+          this.usersService
+            .updateSkillsByUserId(skillRef.instance.skillForm.value)
+            .subscribe({
+              error: (err) =>
+                console.log('Erro ao atualizar competência do usuário: ', err),
+            });
+        }
       });
     }
 
     const socialMedia: SocialMedia =
       this.socialMediaData.socialMediaForm.getRawValue();
-    this.usersService.updateSocialMediaByUserId(socialMedia).subscribe({
-      error: (err) =>
-        console.log('Erro ao atualizar as redes sociais do usuário: ', err),
-    });
+    let isUpdate = false;
+
+    for (const [key, value] of Object.entries(socialMedia)) {
+      if (value !== null) isUpdate = true;
+    }
+
+    if (isUpdate) {
+      socialMedia.userId = user.userId;
+      this.usersService.updateSocialMediaByUserId(socialMedia).subscribe({
+        error: (err) =>
+          console.log('Erro ao atualizar as redes sociais do usuário: ', err),
+      });
+    } else {
+      socialMedia.userId = user.userId;
+      this.usersService.createSocialMediaByUserId(socialMedia).subscribe({
+        error: (err) =>
+          console.log('Erro ao atualizar as redes sociais do usuário: ', err),
+      });
+    }
 
     if (this.componentsToDelete.length > 0) {
       this.componentsToDelete.map((component: any) => {
@@ -371,7 +472,7 @@ export class EditCreateUserComponent implements OnInit {
           });
         } else {
           this.usersService.deleteSkill(component.id).subscribe({
-            error: (err) => console.log('Erro ao excluir competência: ', err)
+            error: (err) => console.log('Erro ao excluir competência: ', err),
           });
         }
       });

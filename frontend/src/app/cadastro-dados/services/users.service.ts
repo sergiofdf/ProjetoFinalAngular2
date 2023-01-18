@@ -59,12 +59,19 @@ export class UsersService {
     return this.http.put<any>(`https://localhost:7241/experience/${experience.experienceId}`, experience);
   }
 
+  public createSkill(skill: Skill): Observable<any> {
+    return this.http.post<any>(`https://localhost:7241/Skill`, skill);
+  }
+
   public updateSkillsByUserId(skill: Skill): Observable<any> {
     return this.http.put<any>(`https://localhost:7241/Skill/${skill.skillId}`, skill);
   }
 
+  public createSocialMediaByUserId(socialMedia: SocialMedia): Observable<any> {
+    return this.http.post<any>(`https://localhost:7241/socialmediainfos`, socialMedia);
+  }
+
   public updateSocialMediaByUserId(socialMedia: SocialMedia): Observable<any> {
-    console.log()
     return this.http.put<any>(`https://localhost:7241/socialmediainfos/${socialMedia.socialMediaInfoId}`, socialMedia);
   }
 

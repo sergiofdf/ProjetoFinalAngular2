@@ -11,7 +11,7 @@ const routes: Routes = [
     loadChildren: () => import('./cadastro-dados/cadastro-dados.module').then(m=> m.CadastroDadosModule)
   },
   {
-    path: 'curriculo',
+    path: 'curriculo/:id',
     loadChildren: () => import('./curriculo/curriculo.module').then(m=> m.CurriculoModule)
   },
   {
