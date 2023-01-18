@@ -12,7 +12,11 @@
       <div class="row">
           <mat-form-field appearance="outline">
             <mat-label>Tipo de competência</mat-label>
-            <input formControlName="skillType" matInput />
+            <mat-select formControlName="skillType">
+              <mat-option *ngFor="let type of skillTypes" [value]="type">{{
+                type
+              }}</mat-option>
+            </mat-select>
             <mat-error>Campo tipo inválido</mat-error>
           </mat-form-field>
       </div>
@@ -25,7 +29,7 @@
           </mat-form-field>
           <mat-form-field appearance="outline" class="col-6">
             <mat-label>Nível</mat-label>
-            <input formControlName="progressLevel"
+            <input type="number" formControlName="progressLevel"
             matInput />
             <mat-error>Campo título inválido</mat-error>
           </mat-form-field>

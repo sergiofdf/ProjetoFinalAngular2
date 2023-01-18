@@ -66,7 +66,7 @@ namespace WorkingBees.Core.Services
 			var experiences = await _experienceRepository.ListAllByUserIdAsync(userId);
 			var socialMedias = (await _socialMediaInfoRepository.ListAllByUserIdAsync(userId)).FirstOrDefault();
 
-			var userCompleteInfo = new UserCompleteInfo(userInfo.UserId!, userInfo.Name!, userInfo.PhoneNumber!, userInfo.Email!, userInfo.City!, userInfo.State!, userInfo.ProfileImageUrl!, skills, experiences, socialMedias);
+			var userCompleteInfo = new UserCompleteInfo(userInfo.UserId!, userInfo.Name!, userInfo.PhoneNumber!, userInfo.Email!, userInfo.City!, userInfo.State!, userInfo.ProfileImageUrl!, skills, experiences, socialMedias!);
 
 			return userCompleteInfo;
 		}

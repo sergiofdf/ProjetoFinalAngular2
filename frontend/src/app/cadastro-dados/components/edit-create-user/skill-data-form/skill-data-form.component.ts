@@ -33,6 +33,7 @@ import { EditCreateUserComponent } from '../edit-create-user.component';
 })
 export class SkillDataFormComponent implements OnInit {
   public skillForm!: FormGroup;
+  public skillTypes = ['Idioma', 'Técnica'];
   @Input() skillId!: number;
   @Input() parentRef!: EditCreateUserComponent;
   @Input() skillData!: Skill;
@@ -43,6 +44,7 @@ export class SkillDataFormComponent implements OnInit {
   ngOnInit(): void {
     this.buildSkillForm(this.skillData);
   }
+
 
   private buildSkillForm(skill?: Skill): void {
     this.skillForm = new FormGroup({
