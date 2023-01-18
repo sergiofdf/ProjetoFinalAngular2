@@ -114,10 +114,10 @@ export class CurriculoComponent implements OnInit {
 
     experiences.map((experience) => {
       let initialDateParsed = this.parseDateFormat(experience.initialDate);
-      // let finalDateParsed = this.parseDateFormat(experience.finalDate);
+      let finalDateParsed = this.parseDateFormat(experience.finalDate);
       const experienceParsed: ExperienceCv = {
         titleElement: experience.title,
-        textDateElement: `${initialDateParsed} - ${experience.finalDate}`,
+        textDateElement: `${initialDateParsed} - ${finalDateParsed}`,
         paragElement: experience.expDescription,
       };
       if (experience.experienceType == 'Profissional') {
@@ -134,7 +134,9 @@ export class CurriculoComponent implements OnInit {
       let formatedDate = '';
       while (date[i]) {
         if (i == 2 || i == 4)
-          formatedDate += '/';
+          if (date[i] != '/' && date[i + 1] != '/') {
+            formatedDate += '/';
+          }
         formatedDate += date[i];
         i++;
       }
