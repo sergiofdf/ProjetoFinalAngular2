@@ -235,7 +235,7 @@ export class EditCreateUserComponent implements OnInit {
         this.socialMediaData.socialMediaForm.patchValue(socialMedia);
       },
       error: (err) => {
-        console.log('Erro ao consultar experiências do usuário:', err);
+        console.log('Erro ao consultar redes sociais do usuário:', err);
       },
     });
   }
@@ -449,7 +449,6 @@ export class EditCreateUserComponent implements OnInit {
     for (const [key, value] of Object.entries(socialMedia)) {
       if (value !== null) isUpdate = true;
     }
-
     if (isUpdate) {
       socialMedia.userId = user.userId;
       this.usersService.updateSocialMediaByUserId(socialMedia).subscribe({
@@ -460,7 +459,7 @@ export class EditCreateUserComponent implements OnInit {
       socialMedia.userId = user.userId;
       this.usersService.createSocialMediaByUserId(socialMedia).subscribe({
         error: (err) =>
-          console.log('Erro ao atualizar as redes sociais do usuário: ', err),
+          console.log('Erro ao cadastrar as redes sociais do usuário: ', err),
       });
     }
 
