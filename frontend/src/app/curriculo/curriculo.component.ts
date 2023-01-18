@@ -23,11 +23,25 @@ export class CurriculoComponent implements OnInit {
 
   public userId!: string;
 
-  public skillBars!: SkillCv[];
-  public contact!: ContactData;
-  public experiencesContainers!: ExperienceContainer[];
-  public socialMedias!: IconText[];
-  public languageBars!: SkillCv[];
+  public skillBars: SkillCv[] = [];
+  public contact: ContactData = {
+    imageUrl: '',
+    contactInfo: []
+  };
+  public experiencesContainers: ExperienceContainer[] = [
+    {
+      icon: '',
+      title: '',
+      experiences: []
+    },
+    {
+      icon: '',
+      title: '',
+      experiences: []
+    }
+  ];
+  public socialMedias: IconText[] = [];
+  public languageBars: SkillCv[] = [];
 
   constructor(
     private usersService: UsersService,
@@ -42,9 +56,10 @@ export class CurriculoComponent implements OnInit {
   public getCurriculoData(): void {
     this.userId = this.route.snapshot.params['id'];
     this.usersService.getUserCompleteById(this.userId).subscribe({
-      next: (res: any) => {
-        const userComplete: UserComplete = res;
-        let { skills, experiences, socialMediaInfos, ...rest } = userComplete;
+      next: (res: UserComplete) => {
+        // console.log(res);
+        let { skills, experiences, socialMediaInfos, ...rest } = res;
+        // console.log(rest);
         this.parseContactInfo(rest);
         this.parseSkillInfo(skills);
         this.parseExperiencesInfo(experiences);
@@ -56,7 +71,6 @@ export class CurriculoComponent implements OnInit {
 
   parseContactInfo(contactData: User): void {
     this.contact.imageUrl = contactData.profileImageUrl;
-    console.log(this.contact.imageUrl)
     const contactInfo = [
       {
         icon: 'bi bi-person-fill',
@@ -113,6 +127,7 @@ export class CurriculoComponent implements OnInit {
   }
 
   parseSocialMediaInfo(socialMediaInfos: SocialMedia): void {
+    console.log(socialMediaInfos)
     if (socialMediaInfos.facebookUrl != null) {
       this.socialMedias.push({
         icon: 'bi bi-facebook',

@@ -64,7 +64,7 @@ namespace WorkingBees.Core.Services
 			UserInfo userInfo = (await _userRepository.ListAllByUserIdAsync(userId)).First();
 			var skills = await _skillRepository.ListAllByUserIdAsync(userId);
 			var experiences = await _experienceRepository.ListAllByUserIdAsync(userId);
-			var socialMedias = await _socialMediaInfoRepository.ListAllByUserIdAsync(userId);
+			var socialMedias = (await _socialMediaInfoRepository.ListAllByUserIdAsync(userId)).FirstOrDefault();
 
 			var userCompleteInfo = new UserCompleteInfo(userInfo.UserId!, userInfo.Name!, userInfo.PhoneNumber!, userInfo.Email!, userInfo.City!, userInfo.State!, userInfo.ProfileImageUrl!, skills, experiences, socialMedias);
 

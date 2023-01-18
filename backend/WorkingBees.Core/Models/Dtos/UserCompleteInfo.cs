@@ -4,9 +4,9 @@
     {
         public List<Skill> Skills { get; set; }
         public List<Experience> Experiences { get; set; }
-        public List<SocialMediaInfo> SocialMediaInfos { get; set; }
+        public SocialMediaInfo SocialMediaInfos { get; set; }
 
-        public UserCompleteInfo(long userId, string name, string phoneNumber, string email, string city, string state, string profileImageUrl, List<Skill> skills, List<Experience> experiences, List<SocialMediaInfo> socialMediaInfos)
+        public UserCompleteInfo(long userId, string name, string phoneNumber, string email, string city, string state, string profileImageUrl, List<Skill> skills, List<Experience> experiences, SocialMediaInfo socialMediaInfos)
         {
             UserId = userId;
             Name = name;
