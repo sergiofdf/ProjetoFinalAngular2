@@ -1,3 +1,4 @@
+import { UserComplete } from './../models/userComplete.model';
 import { Experience } from '../../cadastro-dados/models/experience.model';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -15,8 +16,8 @@ export class UsersService {
 
   constructor(private http: HttpClient) { }
 
-  public getUserCompleteById(id: string): Observable<User> {
-    return this.http.get<User>(`https://localhost:7241/UserCompleteInfo/${id}/id`);
+  public getUserCompleteById(id: string): Observable<UserComplete> {
+    return this.http.get<UserComplete>(`https://localhost:7241/UserCompleteInfo/${id}/id`);
   }
 
   public getUsersFull(): Observable<User[]> {
