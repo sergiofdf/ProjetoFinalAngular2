@@ -1,10 +1,14 @@
+import { ExperienceContainer } from './models/experience-container.model';
+import { User } from './../cadastro-dados/models/user.model';
 import { FormGroup } from '@angular/forms';
 import { IconText } from './models/icon-text.model';
-import { Experience } from './models/experience.model';
-import { Component } from '@angular/core';
-import { ExperienceContainer } from './models/experience-container.model';
-import { ContactData } from './models/contact-data.model';
-import { Skill } from './models/skill.model';
+import { Component, OnInit } from '@angular/core';
+import { UsersService } from '../cadastro-dados/services/users.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { UserComplete } from '../cadastro-dados/models/userComplete.model';
+import { Skill } from '../cadastro-dados/models/skill.model';
+import { Experience } from '../cadastro-dados/models/experience.model';
+import { SocialMedia } from './../cadastro-dados/models/social-media.model';
 
 @Component({
   selector: 'app-curriculo',
@@ -12,10 +16,47 @@ import { Skill } from './models/skill.model';
   styleUrls: ['./curriculo.component.css'],
 })
 
-export class CurriculoComponent {
+
+export class CurriculoComponent implements OnInit{
   public title = 'curriculo';
 
-  public skillBars: Skill[] = [
+
+  public userId!: string;
+
+  public skillBars!: Skill[];
+  public contact!: User;
+  public experiencesContainers!: Experience[]
+  public socialMedias!: SocialMedia
+
+  constructor(
+    private usersService: UsersService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {}
+
+  ngOnInit(): void {
+    this.userId = this.route.snapshot.params['id'];
+    this.usersService.getUserCompleteById(this.userId).subscribe({
+      next: (res: any) => {
+        // let { userComplete.skills, userComplete.experiences, userComplete.socialMedias, ...rest } = res;
+        const userComplete : UserComplete = res;
+        this.skillBars = userComplete.skills;
+        this.experiencesContainers = userComplete.experiences;
+        this.socialMedias = userComplete.socialMediaInfos;
+        const rest: any = { ... userComplete}
+        delete rest.skills
+        delete rest.experiences
+        delete rest.socialMediaInfos
+        this.contact = rest;
+        console.log(this.contact);
+
+      },
+      error: (err) => console.log(err)
+  });
+
+  }
+
+  /*public skillBars: Skill[] = [
     {
       skillTitle: 'C#',
       skillLevel: '90',
@@ -41,6 +82,7 @@ export class CurriculoComponent {
       skillLevel: '60',
     },
   ];
+
   public languageBars: Skill[] = [
     {
       skillTitle: 'Portuguese',
@@ -55,6 +97,7 @@ export class CurriculoComponent {
       skillLevel: '30',
     },
   ];
+
   public contact: ContactData = {
     imageUrl:
       'https://github.com/matteabk/ProjetoAngularI/blob/main/src/assets/FOTO_PERFIL_-_Matheus_A.jpg?raw=true',
@@ -81,6 +124,7 @@ export class CurriculoComponent {
       },
     ],
   };
+
   public experiencesContainers: ExperienceContainer[] = [
     {
       icon: 'bi bi-bag-fill',
@@ -138,6 +182,7 @@ export class CurriculoComponent {
       ],
     },
   ];
+
   public socialMedias: IconText[] = [
     {
       icon: 'bi bi-github',
@@ -159,5 +204,5 @@ export class CurriculoComponent {
 
   onContactFormData(formData: FormGroup): void {
     console.log(formData.value);
-  }
+  }*/
 }
