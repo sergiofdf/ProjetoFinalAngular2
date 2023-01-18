@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { ContactData } from '../../models/contact-data.model';
-import { Skill } from '../../models/skill.model';
+import { SkillCv } from '../../models/skill-cv.model';
 
 @Component({
   selector: 'app-side-section',
@@ -9,6 +9,6 @@ import { Skill } from '../../models/skill.model';
 })
 export class SideSectionComponent {
   @Input() public contact!: ContactData;
-  @Input() public skills!: Skill[];
-  @Input() public languages!: Skill[];
+  @Input() public skills!: SkillCv[];
+  @Input() public languages!: SkillCv[];
 }

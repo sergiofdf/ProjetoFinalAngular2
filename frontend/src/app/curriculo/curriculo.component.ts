@@ -1,32 +1,33 @@
+import { SkillCv } from './models/skill-cv.model';
+import { User } from 'src/app/cadastro-dados/models/user.model';
+import { Skill } from 'src/app/cadastro-dados/models/skill.model';
+import { UserComplete } from './../cadastro-dados/models/userComplete.model';
 import { ExperienceContainer } from './models/experience-container.model';
-import { User } from './../cadastro-dados/models/user.model';
 import { FormGroup } from '@angular/forms';
 import { IconText } from './models/icon-text.model';
 import { Component, OnInit } from '@angular/core';
 import { UsersService } from '../cadastro-dados/services/users.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { UserComplete } from '../cadastro-dados/models/userComplete.model';
-import { Skill } from '../cadastro-dados/models/skill.model';
 import { Experience } from '../cadastro-dados/models/experience.model';
 import { SocialMedia } from './../cadastro-dados/models/social-media.model';
+import { ContactData } from './models/contact-data.model';
+import { ExperienceCv } from './models/experience-cv.model';
 
 @Component({
   selector: 'app-curriculo',
   templateUrl: './curriculo.component.html',
   styleUrls: ['./curriculo.component.css'],
 })
-
-
-export class CurriculoComponent implements OnInit{
+export class CurriculoComponent implements OnInit {
   public title = 'curriculo';
-
 
   public userId!: string;
 
-  public skillBars!: Skill[];
-  public contact!: User;
-  public experiencesContainers!: Experience[]
-  public socialMedias!: SocialMedia
+  public skillBars!: SkillCv[];
+  public contact!: ContactData;
+  public experiencesContainers!: ExperienceContainer[];
+  public socialMedias!: IconText[];
+  public languageBars!: SkillCv[];
 
   constructor(
     private usersService: UsersService,
@@ -35,28 +36,115 @@ export class CurriculoComponent implements OnInit{
   ) {}
 
   ngOnInit(): void {
+    this.getCurriculoData();
+  }
+
+  public getCurriculoData(): void {
     this.userId = this.route.snapshot.params['id'];
     this.usersService.getUserCompleteById(this.userId).subscribe({
       next: (res: any) => {
-        // let { userComplete.skills, userComplete.experiences, userComplete.socialMedias, ...rest } = res;
-        const userComplete : UserComplete = res;
-        this.skillBars = userComplete.skills;
-        this.experiencesContainers = userComplete.experiences;
-        this.socialMedias = userComplete.socialMediaInfos;
-        const rest: any = { ... userComplete}
-        delete rest.skills
-        delete rest.experiences
-        delete rest.socialMediaInfos
-        this.contact = rest;
-        console.log(this.contact);
-
+        const userComplete: UserComplete = res;
+        let { skills, experiences, socialMediaInfos, ...rest } = userComplete;
+        this.parseContactInfo(rest);
+        this.parseSkillInfo(skills);
+        this.parseExperiencesInfo(experiences);
+        this.parseSocialMediaInfo(socialMediaInfos);
       },
-      error: (err) => console.log(err)
-  });
-
+      error: (err) => console.log(err),
+    });
   }
 
-  /*public skillBars: Skill[] = [
+  parseContactInfo(contactData: User): void {
+    this.contact.imageUrl = contactData.profileImageUrl;
+    console.log(this.contact.imageUrl)
+    const contactInfo = [
+      {
+        icon: 'bi bi-person-fill',
+        text: contactData.name,
+      },
+      {
+        icon: 'bi bi-house-door-fill',
+        text: `${contactData.city} - ${contactData.state}`,
+      },
+      {
+        icon: 'bi bi-mailbox2',
+        text: contactData.email,
+      },
+      {
+        icon: 'bi bi-telephone-fill',
+        text: contactData.phoneNumber,
+      },
+    ];
+    this.contact.contactInfo = contactInfo;
+  }
+
+  parseSkillInfo(skillData: Skill[]): void {
+    skillData.map((skill) => {
+      const skillParsed: SkillCv = {
+        skillTitle: skill.title,
+        skillLevel: skill.progressLevel.toString(),
+      };
+      if (skill.skillType != 'Idiomas') {
+        this.skillBars.push(skillParsed);
+      } else {
+        this.languageBars.push(skillParsed);
+      }
+    });
+  }
+
+  parseExperiencesInfo(experiences: Experience[]): void {
+    this.experiencesContainers[0].icon = 'bi bi-bag-fill';
+    this.experiencesContainers[0].title = 'Experiência Profissional';
+    this.experiencesContainers[1].icon = 'bi bi-mortarboard-fill';
+    this.experiencesContainers[1].title = 'Experiência Acadêmica';
+
+    experiences.map((experience) => {
+      const experienceParsed: ExperienceCv = {
+        titleElement: experience.title,
+        textDateElement: `${experience.initialDate} - ${experience.finalDate}`,
+        paragElement: experience.expDescription,
+      };
+      if (experience.experienceType == 'Profissional') {
+        this.experiencesContainers[0].experiences.push(experienceParsed);
+      } else {
+        this.experiencesContainers[1].experiences.push(experienceParsed);
+      }
+    });
+  }
+
+  parseSocialMediaInfo(socialMediaInfos: SocialMedia): void {
+    if (socialMediaInfos.facebookUrl != null) {
+      this.socialMedias.push({
+        icon: 'bi bi-facebook',
+        text: socialMediaInfos.facebookUrl,
+      });
+    }
+    if (socialMediaInfos.instagramUrl != null) {
+      this.socialMedias.push({
+        icon: 'bi bi-instagram',
+        text: socialMediaInfos.instagramUrl,
+      });
+    }
+    if (socialMediaInfos.githubUrl != null) {
+      this.socialMedias.push({
+        icon: 'bi bi-github',
+        text: socialMediaInfos.githubUrl,
+      });
+    }
+    if (socialMediaInfos.linkedinUrl != null) {
+      this.socialMedias.push({
+        icon: 'bi bi-linkedin',
+        text: socialMediaInfos.linkedinUrl,
+      });
+    }
+  }
+
+  onContactFormData(formData: FormGroup): void {
+    console.log(formData.value);
+  }
+}
+
+/*public skillBars: Skill[] = [
     {
       skillTitle: 'C#',
       skillLevel: '90',
@@ -205,4 +293,3 @@ export class CurriculoComponent implements OnInit{
   onContactFormData(formData: FormGroup): void {
     console.log(formData.value);
   }*/
-}

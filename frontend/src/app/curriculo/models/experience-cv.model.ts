@@ -1,4 +1,4 @@
-export interface Experience {
+export interface ExperienceCv {
   titleElement: string;
   paragElement: string;
   textDateElement: string;

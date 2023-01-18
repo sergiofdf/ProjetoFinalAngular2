@@ -57,7 +57,7 @@ export class UserListComponent implements OnInit, OnDestroy {
 
     dialogRef.afterClosed().subscribe(data => {
       if (data === 'delete') {
-        this.deleteUser(user.userId);
+        this.deleteUser(user.userId.toString());
       }
     });
   }

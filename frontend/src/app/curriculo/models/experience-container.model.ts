@@ -1,7 +1,7 @@
-import { Experience } from './experience.model';
+import { ExperienceCv } from './experience-cv.model';
 
 export interface ExperienceContainer {
   icon: string;
   title: string;
-  experiences: Experience[];
+  experiences: ExperienceCv[];
 }

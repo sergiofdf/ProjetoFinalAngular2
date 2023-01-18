@@ -1,4 +1,4 @@
-import { Experience } from './../../models/experience.model';
+import { ExperienceCv } from './../../models/experience-cv.model';
 import { Component, Input } from '@angular/core';
 
 @Component({
@@ -9,5 +9,5 @@ import { Component, Input } from '@angular/core';
 export class CoreSectionComponent {
   @Input() public iconElement!: string;
   @Input() public textElement!: string;
-  @Input() public experiences!: Experience[];
+  @Input() public experiences!: ExperienceCv[];
 }
