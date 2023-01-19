@@ -255,7 +255,7 @@ export class EditCreateUserComponent implements OnInit {
     delete user.userId;
     this.usersService.createUser(user).subscribe({
       error: (err) => console.log('Erro ao cadastrar usuário: ', err),
-      complete: ( ) => this.router.navigate(['/cadastro-dados'])
+      complete: () => this.router.navigate(['/cadastro-dados']),
     });
   }
 
@@ -443,31 +443,33 @@ export class EditCreateUserComponent implements OnInit {
     let isUpdate = false;
     this.usersService.getSocialMediaByUserId(this.userId).subscribe({
       next: (res: SocialMedia) => {
-        if(res) {
-          let { socialMediaInfoId, userId, ...rest } = res
-          for (const [key, value] of Object.entries(rest)) {
-            if (value !== null) isUpdate = true;
-          }
+        if (res) {
+          isUpdate = true;
+        }
+        const socialMedia: SocialMedia =
+          this.socialMediaData.socialMediaForm.getRawValue();
+
+        if (isUpdate) {
+          socialMedia.userId = user.userId;
+          this.usersService.updateSocialMediaByUserId(socialMedia).subscribe({
+            error: (err) =>
+              console.log(
+                'Erro ao atualizar as redes sociais do usuário: ',
+                err
+              ),
+          });
+        } else {
+          socialMedia.userId = user.userId;
+          this.usersService.createSocialMediaByUserId(socialMedia).subscribe({
+            error: (err) =>
+              console.log(
+                'Erro ao cadastrar as redes sociais do usuário: ',
+                err
+              ),
+          });
         }
       },
-    })
-
-    const socialMedia: SocialMedia =
-      this.socialMediaData.socialMediaForm.getRawValue();
-
-    if (isUpdate) {
-      socialMedia.userId = user.userId;
-      this.usersService.updateSocialMediaByUserId(socialMedia).subscribe({
-        error: (err) =>
-          console.log('Erro ao atualizar as redes sociais do usuário: ', err),
-      });
-    } else {
-      socialMedia.userId = user.userId;
-      this.usersService.createSocialMediaByUserId(socialMedia).subscribe({
-        error: (err) =>
-          console.log('Erro ao cadastrar as redes sociais do usuário: ', err),
-      });
-    }
+    });
 
     if (this.componentsToDelete.length > 0) {
       this.componentsToDelete.map((component: any) => {

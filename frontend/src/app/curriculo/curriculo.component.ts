@@ -146,25 +146,25 @@ export class CurriculoComponent implements OnInit {
   }
 
   parseSocialMediaInfo(socialMediaInfos: SocialMedia): void {
-    if (socialMediaInfos.facebookUrl != null) {
+    if (socialMediaInfos.facebookUrl) {
       this.socialMedias.push({
         icon: 'bi bi-facebook',
         text: socialMediaInfos.facebookUrl,
       });
     }
-    if (socialMediaInfos.instagramUrl != null) {
+    if (socialMediaInfos.instagramUrl) {
       this.socialMedias.push({
         icon: 'bi bi-instagram',
         text: socialMediaInfos.instagramUrl,
       });
     }
-    if (socialMediaInfos.githubUrl != null) {
+    if (socialMediaInfos.githubUrl) {
       this.socialMedias.push({
         icon: 'bi bi-github',
         text: socialMediaInfos.githubUrl,
       });
     }
-    if (socialMediaInfos.linkedinUrl != null) {
+    if (socialMediaInfos.linkedinUrl) {
       this.socialMedias.push({
         icon: 'bi bi-linkedin',
         text: socialMediaInfos.linkedinUrl,
