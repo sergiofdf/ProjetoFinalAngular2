@@ -1,6 +1,7 @@
+<ngx-spinner></ngx-spinner>
 <div class="container">
   <div class="row my-4">
-    <p *ngIf="!users?.length" class="d-flex justify-content-center">
+    <p *ngIf="noUserDb" class="d-flex justify-content-center">
       Não há usuários cadastrados ainda
     </p>
     <div class="col-4" *ngFor="let user of users">
@@ -55,4 +56,3 @@
     </div>
   </div>
 </div>
-

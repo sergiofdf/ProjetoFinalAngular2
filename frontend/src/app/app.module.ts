@@ -1,7 +1,7 @@
 import { LoginModule } from './login/login.module';
 import { CadastroDadosModule } from './cadastro-dados/cadastro-dados.module';
 import { CurriculoModule } from './curriculo/curriculo.module';
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -11,6 +11,7 @@ import { TokenInterceptor } from './core/token.interceptor';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 @NgModule({
   declarations: [
@@ -26,8 +27,10 @@ import { MatButtonModule } from '@angular/material/button';
     LoginModule,
     MatToolbarModule,
     MatIconModule,
-    MatButtonModule
+    MatButtonModule,
+    NgxSpinnerModule.forRoot({ type: 'ball-scale-multiple' })
   ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true }
   ],

@@ -8,7 +8,10 @@ import { LoginService } from './login/services/login.service';
 })
 export class AppComponent {
 
-  constructor(private loginService: LoginService) {}
+  constructor(
+    private loginService: LoginService,
+    ) {}
+
 
   public logout(): void{
     this.loginService.logout();

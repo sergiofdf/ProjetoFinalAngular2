@@ -34,7 +34,7 @@ export class UserDataFormComponent implements OnInit {
       city: new FormControl(null, [Validators.required]),
       state: new FormControl(null, [Validators.required]),
       profileImageUrl:new FormControl(null, [Validators.required]),
-      userRole:new FormControl(null, [Validators.required]),
+      userRole:new FormControl(null),
       password:new FormControl(null, [Validators.required]),
     });
   }

@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { Subject } from 'rxjs';
 import { User } from '../../models/user.model';
 import { UsersService } from '../../services/users.service';
@@ -16,20 +17,29 @@ export class UserListComponent implements OnInit, OnDestroy {
   private unsubscribe = new Subject();
 
   public users: User[] = [];
+  public noUserDb: boolean = false;
 
   constructor(
     private usersService: UsersService,
-    private router: Router, public dialog: MatDialog
+    private router: Router, public dialog: MatDialog,
+    private spinner: NgxSpinnerService
   ) { }
 
   ngOnInit(): void {
+    this.spinner.show();
     this.getUsers();
   }
 
   public getUsers(): void {
     this.usersService.getUsers().subscribe({
-      next: (res) => this.users = res,
+      next: (res) => {
+        this.users = res
+        if(res.length == 0){
+          this.noUserDb = true;
+        }
+      },
       error: (err) => console.log('Erro na listagem de usuários: ', err),
+      complete: () => this.spinner.hide()
     })
   }
 

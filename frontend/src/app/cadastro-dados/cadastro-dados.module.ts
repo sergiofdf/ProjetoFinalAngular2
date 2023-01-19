@@ -1,5 +1,6 @@
+import { NgxSpinnerModule } from 'ngx-spinner';
 import { CadastroDadosRoutingModule } from './cadastro-dados-routing.module';
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
@@ -28,7 +29,7 @@ const material = [
   MatFormFieldModule,
   MatSelectModule,
   MatInputModule,
-  MatDialogModule
+  MatDialogModule,
 ];
 
 @NgModule({
@@ -38,7 +39,7 @@ const material = [
     EditCreateUserComponent,
     UserDataFormComponent,
     SocialMediaFormComponent,
-    DialogComponent
+    DialogComponent,
   ],
   imports: [
     CommonModule,
@@ -49,7 +50,9 @@ const material = [
     material,
     ExperienceDataFormComponent,
     SkillDataFormComponent,
+    NgxSpinnerModule.forRoot({ type: 'ball-scale-multiple' })
   ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [provideNgxMask()]
 })
 export class CadastroDadosModule { }
