@@ -84,10 +84,12 @@ export class EditCreateUserComponent implements OnInit {
       (x) => x.instance.expId == id
     )[0];
 
-    this.componentsToDelete.push({
-      id: componentRef.instance.experienceData.experienceId,
-      type: 'experience',
-    });
+    if(componentRef.instance.experienceData){
+      this.componentsToDelete.push({
+        id: componentRef.instance.experienceData.experienceId,
+        type: 'experience',
+      });
+    }
 
     const containerIndex: number = this.container.indexOf(
       componentRef.changeDetectorRef as any
@@ -125,10 +127,12 @@ export class EditCreateUserComponent implements OnInit {
       (x) => x.instance.expId == id
     )[0];
 
-    this.componentsToDelete.push({
-      id: componentRef.instance.experienceData.experienceId,
-      type: 'experience',
-    });
+    if(componentRef.instance.experienceData){
+      this.componentsToDelete.push({
+        id: componentRef.instance.experienceData.experienceId,
+        type: 'experience',
+      });
+    }
 
     const educationContainerIndex: number = this.educationContainer.indexOf(
       componentRef.changeDetectorRef as any
@@ -161,10 +165,12 @@ export class EditCreateUserComponent implements OnInit {
       (x) => x.instance.skillId == id
     )[0];
 
-    this.componentsToDelete.push({
-      id: componentRef.instance.skillData.skillId,
-      type: 'skill',
-    });
+    if(componentRef.instance.skillData){
+      this.componentsToDelete.push({
+        id: componentRef.instance.skillData.skillId,
+        type: 'skill',
+      });
+    }
 
     const skillsContainerIndex: number = this.skillsContainer.indexOf(
       componentRef.changeDetectorRef as any
