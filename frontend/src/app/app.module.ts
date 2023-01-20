@@ -10,6 +10,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from './core/token.interceptor';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
+import {MatMenuModule} from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
 import { NgxSpinnerModule } from 'ngx-spinner';
 
@@ -28,6 +29,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     MatToolbarModule,
     MatIconModule,
     MatButtonModule,
+    MatMenuModule,
     NgxSpinnerModule.forRoot({ type: 'ball-scale-multiple' })
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

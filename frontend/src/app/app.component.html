@@ -4,9 +4,9 @@
     routerLink="/cadastro-dados/"
     >
   <mat-icon style="font-size: 30px;height: 40px;width: 40px;padding-top: 6px;">hive</mat-icon>
-  <p style="padding-top: 6px; margin: 0;">Working Bees</p>
+  <p class="logo-text">Working Bees</p>
   </button>
-  <div class="menu">
+  <div class="menu-lg">
     <button
       mat-button
       routerLink="/cadastro-dados/create"
@@ -23,6 +23,20 @@
       <mat-icon>logout</mat-icon>
     </button>
   </div>
+  <button class="menu-sm" mat-button [matMenuTriggerFor]="menu">Menu</button>
+  <mat-menu class="menu-sm" #menu="matMenu">
+    <button mat-menu-item routerLink="/cadastro-dados/create">Cadastro
+    </button>
+    <button mat-menu-item routerLink="/cadastro-dados">Lista Usuários
+    </button>
+    <button
+      mat-button
+      (click)="logout()"
+      >
+      Sair
+      <mat-icon>logout</mat-icon>
+    </button>
+  </mat-menu>
 </mat-toolbar>
 
 <router-outlet></router-outlet>

@@ -4,8 +4,8 @@
     <p *ngIf="noUserDb" class="d-flex justify-content-center">
       Não há usuários cadastrados ainda
     </p>
-    <div class="col-4" *ngFor="let user of users">
-      <mat-card class="example-card my-3" style="height: 407px;">
+    <div class="col-md-4 col-sm-12" *ngFor="let user of users">
+      <mat-card class="example-card my-3" style="height: 407px;background-color: rgba(194, 221, 247, 0.664);">
         <mat-card-header>
           <mat-card-title>{{ user.name }}</mat-card-title>
           <mat-card-subtitle>

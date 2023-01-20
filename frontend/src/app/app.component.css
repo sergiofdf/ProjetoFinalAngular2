@@ -1,0 +1,31 @@
+.logo-text{
+  padding-top: 6px;
+  margin: 0;
+}
+
+.menu-lg{
+  display: block;
+}
+
+.menu-sm{
+  display: none;
+}
+
+@media (max-width: 680px) {
+  .menu-sm{
+    margin: 20px;
+    display: block;
+    background-color: rgba(177, 173, 173, 0.678);
+  }
+
+  .menu-lg{
+    display: none;
+  }
+}
+
+
+@media (max-width: 380px) {
+  .logo-text{
+    display: none;
+  }
+}
