@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { IsAuthenticatedGuard } from './core/guards/is-authenticated.guard';
 
 const routes: Routes = [
   {
@@ -12,6 +13,7 @@ const routes: Routes = [
   },
   {
     path: 'curriculo/:id',
+    canActivate: [IsAuthenticatedGuard],
     loadChildren: () => import('./curriculo/curriculo.module').then(m=> m.CurriculoModule)
   },
   {

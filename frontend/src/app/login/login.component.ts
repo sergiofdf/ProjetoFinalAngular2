@@ -76,7 +76,7 @@ export class LoginComponent {
     }
   }
 
-  public onCreateClick(): void{
+  public onCreateClick(): void {
     this.router.navigate(['/cadastro-dados/create'])
   }
 }
