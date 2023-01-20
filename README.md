@@ -54,11 +54,9 @@ NgModules
 - Para executar esse programa:
   - Clone o repositório: `git clone https://github.com/sergiofdf/ProjetoFinalAngular2.git`;
 
-  - Abra o projeto da pasta 'backend';
+  - Abra o projeto da pasta 'backend' com o visual studio;
 
-  - Execute o comando `npm i` para instalar as dependências do projeto;
-
-  - Execute o projeto em ambiente de desenvolvimento com o comando `npm start`;
+  - Execute o projeto em ambiente de desenvolvimento com o comando `F5`;
 
   - Abra o projeto da pasta 'frontend';
 
