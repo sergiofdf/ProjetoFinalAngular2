@@ -4,6 +4,7 @@ import { CadastroDados } from './cadastro-dados.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
+import { IsAuthenticatedGuard } from '../core/guards/is-authenticated.guard';
 
 const routes: Routes = [
   {
@@ -12,14 +13,16 @@ const routes: Routes = [
     children: [
       {
         path: '',
+        canActivate: [IsAuthenticatedGuard],
         component: UserListComponent
       },
-       {
+      {
         path: 'create',
         component: EditCreateUserComponent
       },
       {
         path: 'edit/:id',
+        canActivate: [IsAuthenticatedGuard],
         component: EditCreateUserComponent
       },
     ]
